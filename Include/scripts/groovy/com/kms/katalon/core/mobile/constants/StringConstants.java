@@ -436,11 +436,9 @@ public class StringConstants extends com.kms.katalon.core.constants.StringConsta
     
     public static final String KW_MSG_SCREENSHOT_STATUSBAR_INFO_FAIL = CoreMobileMessageConstants.KW_MSG_SCREENSHOT_STATUSBAR_INFO_FAIL;
     
-    public static final String KW_LOG_FAILED_GET_IOS_BUNDLE = CoreMobileMessageConstants.KW_LOG_FAILED_GET_IOS_BUNDLE;
+    public static final String KW_LOG_FAILED_GET_OS_STATUSBAR = CoreMobileMessageConstants.KW_LOG_FAILED_GET_OS_STATUSBAR;
     
-    public static final String KW_LOG_FAILED_GET_IOS_STATUSBAR = CoreMobileMessageConstants.KW_LOG_FAILED_GET_IOS_STATUSBAR;
-    
-    public static final String KW_LOG_FAILED_GET_ANDROID_STATUSBAR = CoreMobileMessageConstants.KW_LOG_FAILED_GET_ANDROID_STATUSBAR;
+    public static final String KW_LOG_FAILED_GET_STATUSBAR = CoreMobileMessageConstants.KW_LOG_FAILED_GET_STATUSBAR;
     
     // XML log
     public static final String XML_LOG_ATTACHMENT_PROPERTY = com.kms.katalon.core.constants.StringConstants.XML_LOG_ATTACHMENT_PROPERTY;

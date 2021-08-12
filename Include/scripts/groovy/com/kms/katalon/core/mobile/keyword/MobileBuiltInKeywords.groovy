@@ -240,7 +240,8 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
         return KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_MOBILE, "takeScreenshot", null, null, null, false, null)
     }
 
-    /** Take screenshot of current application to send to TestOps Vision.
+    /** Take a screenshot of the current application to send to TestOps Vision. The captured image will be saved to the **keyes** folder in the report.
+     * The screenshot will not include OS's status and navigation bars.
      * <p><h5>
      * Example:
      * </h5></p>
@@ -250,14 +251,19 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
      * Mobile.takeScreenshotAsCheckpoint('screenshot_demo', [findTestObject('hidden_object1')], Color.Black, FailureHandling.STOP_ON_FAILURE)
      * </code>
      * </p>
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param hidingColor Color used to paint the overlap layer to hide elements.
-     * @param flowControl FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param hidingColor The color used to draw the overlap layer. If not defined, Color.GRAY is used.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      */
     @CompileStatic
@@ -269,14 +275,15 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, ignoredElements, hidingColor, true, flowControl)
     }
     
-    /** Take screenshot of current application to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param hidingColor Color used to paint the overlap layer to hide elements.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of the current application to send to TestOps Vision. The captured image will be saved to the <b>keyes</b> folder in the report.
+     * The screenshot will not include OS's status and navigation bars.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param hidingColor The color used to draw the overlap layer. If not defined, Color.GRAY is used.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeScreenshotAsCheckpoint(String, List, Color, FailureHandling)
      */
@@ -288,14 +295,20 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, ignoredElements, hidingColor, true, null)
     }
     
-    /** Take screenshot of current application to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param flowControl FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of the current application to send to TestOps Vision. The captured image will be saved to the <b>keyes</b> folder in the report.
+     * The screenshot will not include OS's status and navigation bars.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeScreenshotAsCheckpoint(String, List, Color, FailureHandling)
      */
@@ -307,14 +320,15 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, ignoredElements, null, true, flowControl)
     }
     
-    /** Take screenshot of current application to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param hidingColor Color used to paint the overlap layer to hide elements.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of the current application to send to TestOps Vision. The captured image will be saved to the <b>keyes</b> folder in the report.
+     * The screenshot will not include OS's status and navigation bars.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param hidingColor The color used to draw the overlap layer. If not defined, Color.GRAY is used.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeScreenshotAsCheckpoint(String, List, Color, FailureHandling)
      */
@@ -326,13 +340,18 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, ignoredElements, null, true, null)
     }
     
-    /** Take screenshot of current application to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param flowControl FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of the current application to send to TestOps Vision. The captured image will be saved to the <b>keyes</b> folder in the report.
+     * The screenshot will not include OS's status and navigation bars.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeScreenshotAsCheckpoint(String, List, Color, FailureHandling)
      */
@@ -344,12 +363,12 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, null, null, true, flowControl)
     }
     
-    /** Take screenshot of current application to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of the current application to send to TestOps Vision. The captured image will be saved to the <b>keyes</b> folder in the report.
+     * The screenshot will not include OS's status and navigation bars.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeScreenshotAsCheckpoint(String, List, Color, FailureHandling)
      */
@@ -360,7 +379,8 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, null, null, true, null)
     }
     
-    /** Take screenshot of the specific element to send to TestOps Vision.
+    /** Take a screenshot of a UI element to send to TestOps Vision. The test engine will scroll to this element first then taking a screenshot.
+     * The captured image will be saved to the `keyes` folder in the report.
      * <p><h5>
      * Example:
      * </h5></p>
@@ -370,16 +390,20 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
      * Mobile.takeElementScreenshotAsCheckpoint('screenshot_demo', findTestObject('capture_object'), [findTestObject('hidden_object1')], Color.Black, FailureHandling.STOP_ON_FAILURE)
      * </code>
      * </p>
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param hidingColor Color used to paint the overlap layer to hide elements.
-     * @param flowControl FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param to UI element to be taken screenshot of.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param hidingColor The color used to draw the overlap layer. If not defined, Color.GRAY is used.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      */
     @CompileStatic
@@ -390,16 +414,16 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, to, ignoredElements, hidingColor, true, flowControl)
     }
     
-    /** Take screenshot of the specific element to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param hidingColor Color used to paint the overlap layer to hide elements.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a UI element to send to TestOps Vision. The test engine will scroll to this element first then taking a screenshot.
+     * The captured image will be saved to the `keyes` folder in the report.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param to UI element to be taken screenshot of.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param hidingColor The color used to draw the overlap layer. If not defined, Color.GRAY is used.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeElementScreenshot(String, TestObject, List, Color, FailureHandling)
      */
@@ -411,16 +435,21 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, to, ignoredElements, hidingColor, true, null)
     }
     
-    /** Take screenshot of the specific element to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param flowControl FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a UI element to send to TestOps Vision. The test engine will scroll to this element first then taking a screenshot.
+     * The captured image will be saved to the `keyes` folder in the report.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param to UI element to be taken screenshot of.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeElementScreenshot(String, TestObject, List, Color, FailureHandling)
      */
@@ -432,15 +461,15 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, to, ignoredElements, null, true, flowControl)
     }
     
-    /** Take screenshot of the specific element to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a UI element to send to TestOps Vision. The test engine will scroll to this element first then taking a screenshot.
+     * The captured image will be saved to the `keyes` folder in the report.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param to UI element to be taken screenshot of.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeElementScreenshot(String, TestObject, List, Color, FailureHandling)
      */
@@ -452,15 +481,19 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, to, ignoredElements, null, true, null)
     }
     
-    /** Take screenshot of the specific element to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @param flowControl FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a UI element to send to TestOps Vision. The test engine will scroll to this element first then taking a screenshot.
+     * The captured image will be saved to the `keyes` folder in the report.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param to UI element to be taken screenshot of.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeElementScreenshot(String, TestObject, List, Color, FailureHandling)
      */
@@ -472,14 +505,13 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, to, null, null, true, flowControl)
     }
     
-    /** Take screenshot of the specific element to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a UI element to send to TestOps Vision. The test engine will scroll to this element first then taking a screenshot.
+     * The captured image will be saved to the `keyes` folder in the report.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param to UI element to be taken screenshot of.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeElementScreenshotAsCheckpoint(String, TestObject, List, Color, FailureHandling)
      */
@@ -491,7 +523,7 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, to, null, null, true, null)
     }
     
-    /** Take screenshot of the specific web element.
+    /** Take a screenshot of a UI element. The test engine will scroll to this element first then taking a screenshot.
      * <p><h5>
      * Example:
      * </h5></p>
@@ -501,14 +533,20 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
      * Mobile.takeElementScreenshot('screenshot_demo.png', findTestObject('capture_object'), [findTestObject('hidden_object1')], Color.Black, FailureHandling.STOP_ON_FAILURE)
      * </code>
      * </p>
-     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param hidingColor Color used to paint the overlap layer to hide elements.
-     * @param flowControl FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+     * @param fileName Absolute path to the stored image file. fileName should contain '.png' as images are stored to the '.png' format.
+     * If the file name is not defined, Katalon Studio will generate a random file name.
+     * @param to UI element to be taken screenshot of.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param hidingColor The color used to draw the overlap layer. If not defined, Color.GRAY is used.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      */
     @CompileStatic
@@ -519,14 +557,15 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             fileName, to, ignoredElements, hidingColor, false, flowControl)
     }
     
-    /** Take screenshot of the specific web element.
-     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param hidingColor Color used to paint the overlap layer to hide elements.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /**  Take a screenshot of a UI element. The test engine will scroll to this element first then taking a screenshot.
+     * @param fileName Absolute path to the stored image file. fileName should contain '.png' as images are stored to the '.png' format.
+     * If the file name is not defined, Katalon Studio will generate a random file name.
+     * @param to UI element to be taken screenshot of.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param hidingColor The color used to draw the overlap layer. If not defined, Color.GRAY is used.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeElementScreenshot(String, TestObject, List, Color, FailureHandling)
      */
@@ -538,14 +577,20 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             fileName, to, ignoredElements, hidingColor, false, null)
     }
     
-    /** Take screenshot of the specific web element.
-     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param flowControl FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a UI element. The test engine will scroll to this element first then taking a screenshot.
+     * @param fileName Absolute path to the stored image file. fileName should contain '.png' as images are stored to the '.png' format.
+     * If the file name is not defined, Katalon Studio will generate a random file name.
+     * @param to UI element to be taken screenshot of.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeElementScreenshot(String, TestObject, List, Color, FailureHandling)
      */
@@ -557,13 +602,14 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             fileName, to, ignoredElements, null, false, flowControl)
     }
     
-    /** Take screenshot of the specific web element.
-     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a UI element. The test engine will scroll to this element first then taking a screenshot.
+     * @param fileName Absolute path to the stored image file. fileName should contain '.png' as images are stored to the '.png' format.
+     * If the file name is not defined, Katalon Studio will generate a random file name.
+     * @param to UI element to be taken screenshot of.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeElementScreenshot(String, TestObject, List, Color, FailureHandling)
      */
@@ -575,13 +621,18 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             fileName, to, ignoredElements, null, false, null)
     }
     
-    /** Take screenshot of the specific web element.
-     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @param flowControl FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a UI element. The test engine will scroll to this element first then taking a screenshot.
+     * @param fileName Absolute path to the stored image file. fileName should contain '.png' as images are stored to the '.png' format.
+     * If the file name is not defined, Katalon Studio will generate a random file name.
+     * @param to UI element to be taken screenshot of.
+     * @param flowContro Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeElementScreenshot(String, TestObject, List, Color, FailureHandling)
      */
@@ -593,12 +644,12 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             fileName, to, null, null, false, flowControl)
     }
     
-    /** Take screenshot of the specific web element.
-     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a UI element. The test engine will scroll to this element first then taking a screenshot.
+     * @param fileName Absolute path to the stored image file. fileName should contain '.png' as images are stored to the '.png' format.
+     * If the file name is not defined, Katalon Studio will generate a random file name.
+     * @param to UI element to be taken screenshot of.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeElementScreenshot(String, TestObject, List, Color, FailureHandling)
      */
@@ -609,12 +660,16 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             fileName, to, null, null, false, null)
     }
     
-    /** Take screenshot of the specific web element.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @param flowControlthe FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a UI element. The test engine will scroll to this element first then taking a screenshot.
+     * @param to UI element to be taken screenshot of.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeElementScreenshot(String, TestObject, List, Color, FailureHandling)
      */
@@ -625,11 +680,10 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             to, null, null, false, flowControl)
     }
     
-    /** Take screenshot of the specific web element.
-     * @param to TestObject got from MobileSpy and <i>findTestObject(String to)</i> function.
-     * This cannot be null.
-     * @return  a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a UI element. The test engine will scroll to this element first then taking a screenshot.
+     * @param to UI element to be taken screenshot of.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeElementScreenshot(String, TestObject, List, Color, FailureHandling)
      */
@@ -640,7 +694,7 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             null, to, null, null, false, null)
     }
     
-    /** Take screenshot of the specific area within current view-port  to send to TestOps Vision.
+    /** Take a screenshot of a specific area to send to TestOps Vision. The area should be inside the application viewport; otherwise, this keyword will fail.
      * <p><h5>
      * Example:
      * </h5></p>
@@ -651,16 +705,20 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
      * Mobile.takeAreaScreenshotAsCheckpoint('checkpoint_area_demo',[findTestObject('hidden_object1')], Color.Black, new Rectangle(x, y, height, width), FailureHandling.STOP_ON_FAILURE)
      * </code>
      * </p>
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param hidingColor Color used to paint the overlap layer to hide elements.
-     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param hidingColor The color used to draw the overlap layer. If not defined, Color.GRAY is used.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      */
     @CompileStatic
@@ -672,16 +730,15 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, rect, ignoredElements, hidingColor, true, flowControl)
     }
     
-    /** Take screenshot of the specific area within current view-port  to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param hidingColor Color used to paint the overlap layer to hide elements.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a specific area to send to TestOps Vision. The area should be inside the application viewport; otherwise, this keyword will fail.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param hidingColor The color used to draw the overlap layer. If not defined, Color.GRAY is used.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeAreaScreenshotAsCheckpoint(String, Rectangle, List, Color, FailureHandling)
      */
@@ -693,16 +750,20 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, rect, ignoredElements, hidingColor, true, null)
     }
     
-    /** Take screenshot of the specific area within current view-port  to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a specific area to send to TestOps Vision. The area should be inside the application viewport; otherwise, this keyword will fail.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeAreaScreenshotAsCheckpoint(String, Rectangle, List, Color, FailureHandling)
      */
@@ -714,15 +775,14 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, rect, ignoredElements, null, true, flowControl)
     }
     
-    /** Take screenshot of the specific area within current view-port  to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a specific area to send to TestOps Vision. The area should be inside the application viewport; otherwise, this keyword will fail.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeAreaScreenshotAsCheckpoint(String, Rectangle, List, Color, FailureHandling)
      */
@@ -734,15 +794,18 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, rect, ignoredElements, null, true, null)
     }
     
-    /** Take screenshot of the specific area within current view-port  to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a specific area to send to TestOps Vision. The area should be inside the application viewport; otherwise, this keyword will fail.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeAreaScreenshotAsCheckpoint(String, Rectangle, List, Color, FailureHandling)
      */
@@ -754,14 +817,12 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, rect, null, null, true, flowControl)
     }
     
-    /** Take screenshot of the specific area within current view-port  to send to TestOps Vision.
-     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
-     * Checkpoint will be saved in 'keyes' folder in report folder.
-     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a specific area to send to TestOps Vision. The area should be inside the application viewport; otherwise, this keyword will fail.
+     * @param checkpointName A String representing the name of the image on TestOps Vision. This name will be used to detect which baseline this checkpoint is compared with.
+     * This name will be appended with the TestOps Vision prefix ('keyes-') on a local machine.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeAreaScreenshotAsCheckpoint(String, Rectangle, List, Color, FailureHandling)
      */
@@ -773,7 +834,7 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             checkpointName, rect, null, null, true, null)
     }
     
-    /** Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
+    /** Take a screenshot of a specific area. The area should be inside the application viewport; otherwise, this keyword will fail.
      * <p><h5>
      * Example:
      * </h5></p>
@@ -784,14 +845,20 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
      * Mobile.takeAreaScreenshot('screenshot_area_demo.png',[findTestObject('hidden_object1')], Color.Black, new Rectangle(x, y, height, width), FailureHandling.STOP_ON_FAILURE)
      * </code>
      * </p>
-     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param hidingColor Color used to paint the overlap layer to hide elements.
-     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+     * @param fileName Absolute path to the stored image file. fileName should contain '.png' as images are stored to the '.png' format.
+     * If the file name is not defined, the test engine will generate a random file name.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param hidingColor The color used to draw the overlap layer. If not defined, Color.GRAY is used.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      */
     @CompileStatic
@@ -802,14 +869,15 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             fileName, rect, ignoredElements, hidingColor, false, flowControl)
     }
     
-    /** Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
-     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param hidingColor Color used to paint the overlap layer to hide elements.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a specific area. The area should be inside the application viewport; otherwise, this keyword will fail.
+     * @param fileName Absolute path to the stored image file. fileName should contain '.png' as images are stored to the '.png' format.
+     * If the file name is not defined, the test engine will generate a random file name.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param hidingColor The color used to draw the overlap layer. If not defined, Color.GRAY is used.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeAreaScreenshot(String, Rectangle, List, Color, FailureHandling)
      */
@@ -821,14 +889,20 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             fileName, rect, ignoredElements, hidingColor, false, null)
     }
     
-    /** Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
-     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a specific area. The area should be inside the application viewport; otherwise, this keyword will fail.
+     * @param fileName Absolute path to the stored image file. fileName should contain '.png' as images are stored to the '.png' format.
+     * If the file name is not defined, the test engine will generate a random file name.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeAreaScreenshot(String, Rectangle, List, Color, FailureHandling)
      */
@@ -840,13 +914,14 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
             fileName, rect, ignoredElements, null, false, flowControl)
     }
     
-    /** Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
-     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @param ignoredElements List of TestObject that will be hidden. Can be null or empty.
-     * @return a String represents path to the captured image.
-     * @throws StepFailedException
+    /** Take a screenshot of a specific area. The area should be inside the application viewport; otherwise, this keyword will fail.
+     * @param fileName Absolute path to the stored image file. fileName should contain '.png' as images are stored to the '.png' format.
+     * If the file name is not defined, the test engine will generate a random file name.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @param ignoredElements List of the ignored elements. These elements will be hidden by drawing an overlap color layer.
+     * If the test engine failed to hide the element by any problems, this keyword would continue without impacting the result.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeAreaScreenshot(String, Rectangle, List, Color, FailureHandling)
      */
@@ -859,17 +934,23 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
     }
     
     /**
-     * <p>Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
+     * <p>Take a screenshot of a specific area. The area should be inside the application viewport; otherwise, this keyword will fail.
      * You have to use Script mode to create the Rectangle object.</p>
      * <code>
      * import org.openqa.selenium.Rectangle as Rectangle
      * Mobile.takeAreaScreenshotAsCheckpoint('screenshot_area_demo.png', new Rectangle(x, y, width, height))
      * </code>
-     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
+     * @param fileName Absolute path to the stored image file. fileName should contain '.png' as images are stored to the '.png' format.
+     * If the file name is not defined, the test engine will generate a random file name.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeAreaScreenshot(String, Rectangle, List, Color, FailureHandling)
      */
@@ -882,11 +963,12 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
     }
     
     /**
-     * Take screenshot of the specific area. Default FailureHandling is used.
-     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @return a String represents path to the captured image.
+     * Take a screenshot of a specific area. The area should be inside the application viewport; otherwise, this keyword will fail.
+     * @param fileName  Absolute path to the stored image file. fileName should contain '.png' as images are stored to the '.png' format.
+     * If the file name is not defined, the test engine will generate a random file name.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeAreaScreenshot(String, Rectangle, List, Color, FailureHandling)
      */
@@ -898,12 +980,17 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
     }
     
     /**
-     * Take screenshot of the specific area with default filename
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
-     * @return a String represents path to the captured image.
+     * Take a screenshot of a specific area. The area should be inside the application viewport; otherwise, this keyword will fail.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @param flowControl Specify {@link FailureHandling} schema to determine whether the execution should be allowed to continue or stop. <p>
+     *      <ul>
+     *      <li>STOP_ON_FAILURE: throws a StepFailedException if the step failed (default).</li>
+     *      <li>CONTINUE_ON_FAILURE: continue the test if the test failed but the test result is still failed.</li>
+     *      <li>OPTIONAL: continue the test and ignore the test result.</li>
+     *      </ul> 
+     * @return a String representing the path to the captured image.
      * @since 7.8.0
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @see MobileBuiltInKeywords#takeAreaScreenshot(String, Rectangle, List, Color, FailureHandling)
      */
     @CompileStatic
@@ -914,10 +1001,10 @@ public class MobileBuiltInKeywords extends BuiltinKeywords {
     }
     
     /**
-     * Take screenshot of the specific area with default filename and default FailureHandling
-     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
-     * This cannot be null.
-     * @return a String represents path to the captured image.
+     * Take a screenshot of a specific area. The area should be inside the application viewport; otherwise, this keyword will fail.
+     * @param rect A rectangle defining the position and size of the area to be captured.
+     * @return a String representing the path to the captured image.
+     * @throws StepFailedException If the test engine can't store the image in the disk.
      * @since 7.8.0
      * @see MobileBuiltInKeywords#takeAreaScreenshot(String, Rectangle, List, Color, FailureHandling)
      */

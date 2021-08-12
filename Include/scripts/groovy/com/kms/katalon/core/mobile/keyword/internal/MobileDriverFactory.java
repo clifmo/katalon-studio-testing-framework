@@ -256,8 +256,15 @@ public class MobileDriverFactory {
      * Close the current active mobile driver
      */
     public static void closeDriver() {
-        AppiumSessionCollector.removeSession(getDriver());
-        AppiumDriverManager.closeDriver();
+        try {
+            AppiumDriver<?> driver = AppiumDriverManager.getDriver();
+            if (driver != null) {
+                AppiumSessionCollector.removeSession(driver);
+                AppiumDriverManager.closeDriver();
+            }
+        } catch (StepFailedException ignored) {
+            // No driver started
+        }
     }
 
     private static DesiredCapabilities convertPropertiesMaptoDesireCapabilities(Map<String, Object> propertyMap,

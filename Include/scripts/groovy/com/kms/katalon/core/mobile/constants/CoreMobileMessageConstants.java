@@ -431,11 +431,9 @@ public class CoreMobileMessageConstants extends NLS {
     
     public static String KW_MSG_SCREENSHOT_STATUSBAR_INFO_FAIL;
     
-    public static String KW_LOG_FAILED_GET_IOS_BUNDLE;
+    public static String KW_LOG_FAILED_GET_OS_STATUSBAR;
     
-    public static String KW_LOG_FAILED_GET_IOS_STATUSBAR;
-    
-    public static String KW_LOG_FAILED_GET_ANDROID_STATUSBAR;
+    public static String KW_LOG_FAILED_GET_STATUSBAR;
     
     static {
         // initialize resource bundle

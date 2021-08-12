@@ -107,7 +107,7 @@ public class MobileScreenCaptor extends ScreenCaptor {
 
     private static final Color DEFAULT_HIDDEN_COLOR = Color.RED;
 
-    protected static String takeScreenshot(AppiumDriver<? extends WebElement> driver, String fileName) {
+    public static String takeScreenshot(AppiumDriver<? extends WebElement> driver, String fileName) {
         File tempFile = driver.getScreenshotAs(OutputType.FILE);
         if (!tempFile.exists()) {
             throw new StepFailedException(StringConstants.KW_MSG_UNABLE_TO_TAKE_SCREENSHOT);
@@ -249,7 +249,7 @@ public class MobileScreenCaptor extends ScreenCaptor {
         return screenshot;
     }
 
-    protected static BufferedImage takeElementScreenshot(AppiumDriver<? extends WebElement> driver, TestObject to,
+    public static BufferedImage takeElementScreenshot(AppiumDriver<? extends WebElement> driver, TestObject to,
             List<TestObject> ignoredElements, Color hidingColor) throws Exception {
         BufferedImage screenshot = takeViewportScreenshot(driver, ignoredElements, hidingColor);
         WebElement element = MobileElementCommonHelper.findElementWithCheck(to, 0);
@@ -259,7 +259,7 @@ public class MobileScreenCaptor extends ScreenCaptor {
         return screenshot.getSubimage(rect.x, rect.y, rect.width, rect.height);
     }
 
-    protected static BufferedImage takeAreaScreenshot(AppiumDriver<? extends WebElement> driver, Rectangle rect,
+    public static BufferedImage takeAreaScreenshot(AppiumDriver<? extends WebElement> driver, Rectangle rect,
             List<TestObject> ignoredElements, Color hidingColor) throws MobileException {
         try {
             BufferedImage screenshot = takeViewportScreenshot(driver, ignoredElements, hidingColor);
