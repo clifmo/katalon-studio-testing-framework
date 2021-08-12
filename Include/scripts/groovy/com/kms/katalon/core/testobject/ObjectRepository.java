@@ -170,7 +170,7 @@ public class ObjectRepository {
         // Read test objects cached in temporary in record session.
         Map<String, TestObject> testObjectsCached = getCapturedTestObjects();
 
-        if (testObjectRelativeId != null && testObjectsCached.containsKey(testObjectRelativeId)) {
+        if (testObjectRelativeId != null && testObjectsCached != null && testObjectsCached.containsKey(testObjectRelativeId)) {
             return testObjectsCached.get(testObjectRelativeId);
         }
 

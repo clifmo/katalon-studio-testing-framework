@@ -320,6 +320,8 @@ public class CoreMessageConstants extends NLS {
 
     public static String MSG_ERR_FFMPEG_NOT_INSTALLED;
 
+    public static String KRE_MSG_DRIVER_NOT_FOUND;
+
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, CoreMessageConstants.class);

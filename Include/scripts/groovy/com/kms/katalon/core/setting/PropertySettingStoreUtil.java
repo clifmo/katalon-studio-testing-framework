@@ -220,7 +220,7 @@ public class PropertySettingStoreUtil {
                 + File.separator + settingName + PROPERTY_FILE_EXENSION, comment);
     }
 
-    private static Properties getSettings(String filePath) throws IOException {
+    public static Properties getSettings(String filePath) throws IOException {
         File settingFile = new File(filePath);
         if (!settingFile.exists()) {
             settingFile.createNewFile();

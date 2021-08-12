@@ -28,6 +28,7 @@ import com.kms.katalon.core.logging.model.TestStatus;
 import com.kms.katalon.core.logging.model.TestStatus.TestStatusValue;
 import com.kms.katalon.core.logging.model.TestStepLogRecord;
 import com.kms.katalon.core.logging.model.TestSuiteLogRecord;
+import com.kms.katalon.util.XmlInputFactoryProvider;
 
 public class TestSuiteXMLLogParser {
     private static final String XML_DESCRIPTOR_SUFFIX = "?>";
@@ -50,7 +51,7 @@ public class TestSuiteXMLLogParser {
         if (xmlFiles == null || xmlFiles.length == 0) {
             return null;
         }
-        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+        XMLInputFactory inputFactory = XmlInputFactoryProvider.newInstance();
         Deque<Object> stack = new ArrayDeque<Object>();
         progressMonitor.beginTask(CoreMessageConstants.MSG_INFO_PARSING_LOG_FILES, xmlFiles.length);
         for (File xmlFile : xmlFiles) {

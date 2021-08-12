@@ -57,7 +57,7 @@ public class KeywordExecutor {
     @CompileStatic
     public static Object executeKeywordForPlatform(String platform, String keyword, Object ...params) {
         IKeyword[] actions = getActions(platform, keyword, getSuitablePackage(platform))
-        if (actions.length != 1) {
+        if (actions.length < 1) {
             throw new StepFailedException(MessageFormat.format(StringConstants.KEYWORD_X_DOES_NOT_EXIST_ON_PLATFORM_Y, [keyword, platform] as Object[]))
         }
 		KeywordExecutionContext.saveRunningKeywordAndPlatform(platform, keyword);

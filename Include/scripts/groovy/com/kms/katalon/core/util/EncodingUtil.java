@@ -11,9 +11,15 @@ import javax.script.ScriptException;
 
 import org.apache.commons.text.StringEscapeUtils;
 
+import com.kms.katalon.core.util.internal.JsonUtil;
+
 public class EncodingUtil {
     private EncodingUtil() {
         // Hide the default Constructor
+    }
+
+    public static String encodeURIComponent(Object object) {
+        return safeCallJsFunction("encodeURIComponent", JsonUtil.toJson(object, false));
     }
 
     public static String encodeURIComponent(String text) {

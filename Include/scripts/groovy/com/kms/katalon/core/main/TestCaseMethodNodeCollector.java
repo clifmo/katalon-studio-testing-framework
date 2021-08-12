@@ -20,6 +20,7 @@ import org.codehaus.groovy.ast.MethodNode;
 import org.codehaus.groovy.ast.ModuleNode;
 import org.codehaus.groovy.ast.builder.AstBuilder;
 import org.codehaus.groovy.control.CompilePhase;
+import org.codehaus.groovy.control.MultipleCompilationErrorsException;
 
 import com.kms.katalon.core.annotation.SetUp;
 import com.kms.katalon.core.annotation.TearDown;
@@ -38,7 +39,7 @@ public class TestCaseMethodNodeCollector {
 
     private String importString;
 
-    TestCaseMethodNodeCollector(TestCase testCase) throws IOException {
+    TestCaseMethodNodeCollector(TestCase testCase) throws IOException, MultipleCompilationErrorsException {
         classNode = getMainClassNode(new AstBuilder().buildFromString(CompilePhase.CONVERSION, false,
                 FileUtils.readFileToString(new File(testCase.getGroovyScriptPath()), DF_CHARSET)));
         if (classNode == null) {

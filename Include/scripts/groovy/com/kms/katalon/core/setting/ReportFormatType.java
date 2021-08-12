@@ -1,7 +1,7 @@
 package com.kms.katalon.core.setting;
 
 public enum ReportFormatType {
-    HTML("HTML file"), CSV("CSV file"), PDF("PDF file"), LOG("Log files");
+    HTML("HTML file"), CSV("CSV file"), PDF("PDF file"), LOG("Log files"), PNG("PNG files");
 
     private final String text;
 
@@ -24,6 +24,8 @@ public enum ReportFormatType {
                 return "log";
             case PDF:
                 return "pdf";
+            case PNG:
+                return "png";
         }
         return "";
     }

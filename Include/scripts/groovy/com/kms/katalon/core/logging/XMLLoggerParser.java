@@ -25,6 +25,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 
+import com.kms.katalon.util.XmlInputFactoryProvider;
+
 public class XMLLoggerParser {
 
     private static final String UTF_8 = "UTF-8";
@@ -77,7 +79,7 @@ public class XMLLoggerParser {
         if (StringUtils.isEmpty(xmlString)) {
             return Collections.emptyList();
         }
-        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+        XMLInputFactory inputFactory = XmlInputFactoryProvider.newInstance();
         XMLStreamReader reader = null;
         try {
             reader = inputFactory.createXMLStreamReader(new StringReader(xmlString));
@@ -115,7 +117,7 @@ public class XMLLoggerParser {
         if (xmlFile == null || !xmlFile.exists()) {
             return Collections.emptyList();
         }
-        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+        XMLInputFactory inputFactory = XmlInputFactoryProvider.newInstance();
         XMLStreamReader reader = null;
         FileInputStream fileInputStream = null;
         try {

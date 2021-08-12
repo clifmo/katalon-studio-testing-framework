@@ -149,6 +149,8 @@ public class RunConfiguration {
     
     public static final String TC_RETRY_IMMEDIATELY_BINDINGS = "retryImmediatelyTcBinding";
     
+    public static final String HTTPS_PROTOCOL = "httpsProtocol";
+
     private static String settingFilePath;
 
     private static final ThreadLocal<Map<String, Object>> localExecutionSettingMapStorage = new InheritableThreadLocal<Map<String, Object>>(){

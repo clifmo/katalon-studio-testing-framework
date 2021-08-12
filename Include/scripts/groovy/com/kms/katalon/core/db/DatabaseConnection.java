@@ -5,12 +5,14 @@ import java.sql.DatabaseMetaData;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.util.Properties;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.kms.katalon.core.constants.StringConstants;
+import com.kms.katalon.core.exception.DriverNotFoundException;
 import com.kms.katalon.core.logging.KeywordLogger;
 import com.kms.katalon.core.testdata.TestDataInfo;
 
@@ -21,7 +23,7 @@ public class DatabaseConnection {
 
 	private final KeywordLogger logger = KeywordLogger.getInstance(DatabaseConnection.class);
 
-	private static final String PASSWORD_PROPERTY = "password";
+	private static final String PW_PROPERTY = "password";
 
 	private static final String USER_PROPERTY = "user";
 
@@ -107,7 +109,7 @@ public class DatabaseConnection {
 			properties.setProperty(USER_PROPERTY, user);
 		}
 		if (password != null) {
-			properties.setProperty(PASSWORD_PROPERTY, password);
+			properties.setProperty(PW_PROPERTY, password);
 		}
 		return getConnection(properties);
 	}
@@ -164,11 +166,25 @@ public class DatabaseConnection {
     private String loadSuitableDatabaseDriver() {
         try {
             if (StringUtils.isNotEmpty(driverClassName)) {
+                if (driverClassName.equals("com.mysql.cj.jdbc.Driver")
+                        && StringUtils.startsWith(connectionUrl, "jdbc:mysql")) {
+                    try {
+                        return loadDriverIntoClassPath("com.mysql.cj.jdbc.Driver");
+                    } catch (ClassNotFoundException e) {
+                        throw new DriverNotFoundException(
+                                MessageFormat.format(StringConstants.KRE_MSG_DRIVER_NOT_FOUND, connectionUrl));
+                    }
+                }
                 Class.forName(driverClassName, true, Thread.currentThread().getContextClassLoader());
                 return driverClassName;
             } else {
                 if (StringUtils.startsWith(connectionUrl, "jdbc:mysql")) {
-                    return loadDriverIntoClassPath("com.mysql.cj.jdbc.Driver");
+                    try {
+                        return loadDriverIntoClassPath("com.mysql.cj.jdbc.Driver");
+                    } catch (ClassNotFoundException e) {
+                        throw new DriverNotFoundException(
+                                MessageFormat.format(StringConstants.KRE_MSG_DRIVER_NOT_FOUND, connectionUrl));
+                    }
                 }
 
                 if (StringUtils.startsWith(connectionUrl, "jdbc:sqlserver")) {

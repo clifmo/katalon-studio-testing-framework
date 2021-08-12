@@ -31,8 +31,6 @@ import com.kms.katalon.core.context.internal.InternalTestCaseContext;
 import com.kms.katalon.core.context.internal.InternalTestSuiteContext;
 import com.kms.katalon.core.context.internal.VideoRecorderService;
 import com.kms.katalon.core.driver.internal.DriverCleanerCollector;
-import com.kms.katalon.core.execution.TestExecutionSocketServer;
-import com.kms.katalon.core.execution.TestExecutionSocketServerEndpoint;
 import com.kms.katalon.core.logging.ErrorCollector;
 import com.kms.katalon.core.logging.KeywordLogger;
 import com.kms.katalon.core.logging.KeywordLogger.KeywordStackElement;
@@ -59,8 +57,6 @@ public class TestSuiteExecutor {
 
     private ScriptCache scriptCache;
     
-    private static final int TEST_EXECUTION_WEBSOCKET_PORT = 12954;
-
     private static final Set<String> TEST_SUITE_ANNOTATION_METHODS;
     static {
         TEST_SUITE_ANNOTATION_METHODS = new HashSet<>();
@@ -90,8 +86,6 @@ public class TestSuiteExecutor {
 
         eventManger.publicEvent(ExecutionListenerEvent.BEFORE_TEST_SUITE, new Object[] { testSuiteContext });
         
-        openExecutionEndNotifyingClient();
-
         accessTestSuiteMainPhase(suiteProperties, testCaseBindingFile);
 
         String status = "COMPLETE";
@@ -110,12 +104,6 @@ public class TestSuiteExecutor {
 
         eventManger.publicEvent(ExecutionListenerEvent.AFTER_TEST_EXECUTION, new Object[0]);
     }
-    
-    private static void openExecutionEndNotifyingClient() {
-        TestExecutionSocketServer.getInstance().start(TestExecutionSocketServerEndpoint.class,
-                TEST_EXECUTION_WEBSOCKET_PORT);
-    }
-
 
     private void accessTestSuiteMainPhase(Map<String, String> suiteProperties, File testCaseBindingFile) {
         ErrorCollector errorCollector = ErrorCollector.getCollector();

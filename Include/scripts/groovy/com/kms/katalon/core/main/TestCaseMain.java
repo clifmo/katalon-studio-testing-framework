@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.codehaus.groovy.control.CompilationFailedException;
 import org.codehaus.groovy.runtime.InvokerHelper;
 
+import com.kms.katalon.constants.GlobalStringConstants;
 import com.kms.katalon.core.configuration.RunConfiguration;
 import com.kms.katalon.core.constants.StringConstants;
 import com.kms.katalon.core.context.internal.ExecutionEventManager;
@@ -22,15 +22,14 @@ import com.kms.katalon.core.logging.ErrorCollector;
 import com.kms.katalon.core.model.FailureHandling;
 import com.kms.katalon.core.testcase.TestCaseBinding;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.util.ContextInitializer;
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
 import groovy.util.Node;
 import groovy.util.NodeList;
 import groovy.util.XmlParser;
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtMethod;
 
 public class TestCaseMain {
 
@@ -60,13 +59,14 @@ public class TestCaseMain {
 //        loadGlobalVariableClass(classLoader);
         loadInternalGlobalVariableClass(classLoader);
         loadCustomKeywordsClass(classLoader);
-
+        modifyCustomKeywordsClassAtRunTime(classLoader);
+        
         eventManager = ExecutionEventManager.getInstance();
     }
 
     private static void loadCustomKeywordsClass(GroovyClassLoader cl) {
         // Load CustomKeywords class
-        Class<?> clazz = cl.parseClass("class CustomKeywords { }");
+        Class<?> clazz = cl.parseClass("class CustomKeywords { }");        
         InvokerHelper.metaRegistry.setMetaClass(clazz, new CustomKeywordDelegatingMetaClass(clazz, cl));
     }
 
@@ -94,7 +94,35 @@ public class TestCaseMain {
             }
         }
     }
-
+    
+    private static void modifyCustomKeywordsClassAtRunTime(GroovyClassLoader cl) {
+        try {
+            boolean isModified = false;
+            ClassPool pool = ClassPool.getDefault();
+            CtClass newCustomKeywordsClass = pool.get(StringConstants.CUSTOM_KEYWORD_CLASS_NAME);
+            if (newCustomKeywordsClass != null) {
+                newCustomKeywordsClass.defrost();                
+                CtMethod[] methods = newCustomKeywordsClass.getDeclaredMethods();
+                for (CtMethod method : methods) {
+                    // Only remove methods with name like "com.Example.HelloWord()"...
+                    if (method.getName().contains(".")) {
+                        newCustomKeywordsClass.removeMethod(method);
+                        isModified = true;
+                    }
+                }
+                if (isModified) {
+                    String path = RunConfiguration.getProjectDir() + File.separator
+                            + GlobalStringConstants.SYSTEM_FOLDER_NAME_BIN + File.separator + "lib";           
+                    newCustomKeywordsClass.writeFile(path);           
+                    Class<?> clazz = Class.forName(StringConstants.CUSTOM_KEYWORD_CLASS_NAME);
+                    InvokerHelper.metaRegistry.setMetaClass(clazz, new CustomKeywordDelegatingMetaClass(clazz, cl));   
+                }                                
+            }           
+        } catch (Exception e) {
+            //ignored
+        }
+    }
+    
     public static TestResult runTestCase(String testCaseId, TestCaseBinding testCaseBinding,
             FailureHandling flowControl) throws InterruptedException {
         return runTestCase(testCaseId, testCaseBinding, flowControl, true, true);
@@ -198,6 +226,25 @@ public class TestCaseMain {
         }
     }
     
+    public static Map<String, Object> getParsedValues(Map<String, Object> rawMap) {
+        Map<String, Object> result = new HashMap<>();
+        for (Map.Entry<String, Object> entry : rawMap.entrySet()) {
+            Object value = entry.getValue();
+            String trimmed = String.valueOf(value).trim();
+            if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+                try {
+                    value = engine.runScriptWithoutLogging(trimmed, new Binding());
+                } catch (Exception e) {
+                    KatalonRuntimeException runtimeException = new KatalonRuntimeException(String.format(
+                            "Could not evaluate overriding value for variable: %s", entry.getKey(), e.getMessage()), e);
+                    ErrorCollector.getCollector().addError(runtimeException);
+                }
+            }
+            result.put(entry.getKey(), value);
+        }
+        return result;
+    }
+
     public static void logGlobalVariableError(Exception e) {
         KatalonRuntimeException runtimeException = new KatalonRuntimeException(
                 String.format("There was something wrong in GlobalVariable. Details: %s", e.getMessage()));

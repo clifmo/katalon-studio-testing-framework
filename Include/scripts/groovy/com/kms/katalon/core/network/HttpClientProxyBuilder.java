@@ -55,6 +55,8 @@ public class HttpClientProxyBuilder {
 	private static final String SOCKET_FACTORY_REGISTRY = "http.socket-factory-registry";
 
     private static final int DEFAULT_CONNECT_TIMEOUT = 60000; //milliseconds
+
+    protected static final boolean HOST_NAME_VERIFY_VALUE = true;
     
     private static PoolingHttpClientConnectionManager connectionManager;
     
@@ -240,7 +242,7 @@ public class HttpClientProxyBuilder {
         return new HostnameVerifier() {
             @Override
             public boolean verify(String urlHostName, SSLSession session) {
-                return true;
+                return HOST_NAME_VERIFY_VALUE;
             }
         };
     }

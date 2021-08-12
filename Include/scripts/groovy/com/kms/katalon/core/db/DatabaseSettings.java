@@ -15,9 +15,11 @@ public class DatabaseSettings {
 
     public static final String USER = "USER";
 
-    public static final String PASSWORD = "PASSWORD";
+    public static final String PW = "PASSWORD";
     
     public static final String DRIVERCLASSNAME = "DRIVERCLASSNAME";
+
+    public static final String SHOW_WARNING = "SHOW_WARNING";
 
     private Properties settings;
 
@@ -86,10 +88,18 @@ public class DatabaseSettings {
     }
 
     public String getPassword() {
-        return Base64.decode(settings.getProperty(PASSWORD));
+        return Base64.decode(settings.getProperty(PW));
     }
 
     public void setPassword(String plainTextPassword) {
-        settings.setProperty(PASSWORD, Base64.encode(StringUtils.trimToEmpty(plainTextPassword)));
+        settings.setProperty(PW, Base64.encode(StringUtils.trimToEmpty(plainTextPassword)));
+    }
+
+    public boolean shouldShowWarning() {
+        return settings.getProperty(SHOW_WARNING) == null;
+    }
+
+    public void setShowWarning(boolean showWarning) {
+        settings.setProperty(SHOW_WARNING, String.valueOf(showWarning));
     }
 }

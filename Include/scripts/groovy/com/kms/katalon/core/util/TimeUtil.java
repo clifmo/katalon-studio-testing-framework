@@ -6,23 +6,39 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class TimeUtil {
+    public static final long INFINITE_TIMEOUT = 0;
 
-    public interface TimerCallback {
+    public interface IntervalCallback {
+        void call(Timer timer);
+    }
+
+    public interface TimeoutCallback {
         void call();
     }
 
-    public static Timer setInterval(TimerCallback callback, long interval) {
+    public static Timer setInterval(IntervalCallback callback, long interval) {
+        return setInterval(callback, interval, INFINITE_TIMEOUT);
+    }
+
+    public static Timer setInterval(IntervalCallback callback, long interval, long duration) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                callback.call();
+                callback.call(timer);
             }
         }, interval, interval);
+
+        if (duration > 0) {
+            setTimeout(() -> {
+                timer.cancel();
+            }, duration);
+        }
+
         return timer;
     }
 
-    public static Timer setTimeout(TimerCallback callback, long timeout) {
+    public static Timer setTimeout(TimeoutCallback callback, long timeout) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -31,6 +47,24 @@ public class TimeUtil {
             }
         }, timeout);
         return timer;
+    }
+
+    public static boolean isCanceled(Timer timer) {
+        if (timer == null) {
+            return true;
+        }
+        return ((int) ObjectUtil.getField(ObjectUtil.getField(timer, "queue"), "size")) <= 0;
+    }
+
+    /**
+     * @return true if the timer is running and successfully canceled, false if the timer is already canceled or the timer is null
+     */
+    public static boolean cancel(Timer timer) {
+        if (!TimeUtil.isCanceled(timer)) {
+            timer.cancel();
+            return true;
+        }
+        return false;
     }
 
     /**

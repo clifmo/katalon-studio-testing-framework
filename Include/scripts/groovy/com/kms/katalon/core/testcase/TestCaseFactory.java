@@ -14,10 +14,13 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.xml.sax.SAXException;
 
 import com.kms.katalon.core.configuration.RunConfiguration;
 import com.kms.katalon.core.constants.StringConstants;
+import com.kms.katalon.core.exception.KatalonRuntimeException;
 import com.kms.katalon.core.util.internal.ExceptionsUtil;
+import com.kms.katalon.util.SAXReaderProvider;
 
 public class TestCaseFactory {
     private static final String TEST_CASE_META_ROOT_FOLDER_NAME = "Test Cases";
@@ -75,7 +78,7 @@ public class TestCaseFactory {
 
     private static TestCase readTestCase(String testCaseId, File testCaseMetaFile) {
         try {
-            SAXReader reader = new SAXReader();
+            SAXReader reader = SAXReaderProvider.newInstance();
             Document document = reader.read(testCaseMetaFile);
             Element rootElement = document.getRootElement();
             TestCase testCase = new TestCase(testCaseId);
@@ -98,6 +101,8 @@ public class TestCaseFactory {
             throw new IllegalArgumentException(MessageFormat.format(
                     StringConstants.TEST_CASE_FACTORY_MSG_TC_NOT_EXISTED_WITH_REASON, testCaseId,
                     ExceptionsUtil.getMessageForThrowable(e)));
+        } catch (SAXException e) {
+            throw new KatalonRuntimeException(e);
         }
     }
 

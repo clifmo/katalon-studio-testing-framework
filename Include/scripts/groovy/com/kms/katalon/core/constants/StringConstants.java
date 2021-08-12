@@ -522,4 +522,6 @@ public class StringConstants {
     // Screenshot keyword
     public static final String UTIL_EXC_FILE_PATH_INVALID = CoreMessageConstants.UTIL_EXC_FILE_PATH_INVALID;
     public static final String UTIL_EXC_FILE_NOT_NULL = CoreMessageConstants.UTIL_EXC_FILE_NOT_NULL;
+
+    public static final String KRE_MSG_DRIVER_NOT_FOUND = CoreMessageConstants.KRE_MSG_DRIVER_NOT_FOUND;
 }

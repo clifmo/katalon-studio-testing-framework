@@ -30,6 +30,7 @@ import com.kms.katalon.core.testdata.reader.ExcelFactory;
 import com.kms.katalon.core.util.internal.Base64;
 import com.kms.katalon.core.util.internal.ExceptionsUtil;
 import com.kms.katalon.core.util.internal.PathUtil;
+import com.kms.katalon.util.SAXReaderProvider;
 
 public class TestDataFactory {
 
@@ -67,7 +68,7 @@ public class TestDataFactory {
 
     private static final String NODE_USER = "user";
 
-    private static final String NODE_PASSWORD = "password";
+    private static final String NODE_PW = "password";
 
     private static final String NODE_SQL_QUERY = "query";
     
@@ -138,7 +139,7 @@ public class TestDataFactory {
         logger.logDebug(MessageFormat.format(StringConstants.XML_LOG_TEST_DATA_FINDING_TEST_DATA_WITH_ID_X, testDataId));
         File dataFile = new File(projectDir, testDataId + TEST_DATA_FILE_EXTENSION);
         if (dataFile.exists()) {
-            SAXReader reader = new SAXReader();
+            SAXReader reader = SAXReaderProvider.newInstance();
             Document document = reader.read(dataFile);
             Element testDataElement = document.getRootElement();
             TestData testData;
@@ -315,13 +316,13 @@ public class TestDataFactory {
 
         if (secureUserAccount) {
             validateTestDataElement(testDataElement, NODE_USER);
-            validateTestDataElement(testDataElement, NODE_PASSWORD);
+            validateTestDataElement(testDataElement, NODE_PW);
             user = testDataElement.element(NODE_USER).getText();
             if (testDataElement.element(NODE_DRIVER_CLASS_NAME) != null) {
             	driverClassName = testDataElement.element(NODE_DRIVER_CLASS_NAME).getText();
             }
             // decrypt password before use
-            password = Base64.decode(testDataElement.element(NODE_PASSWORD).getText());
+            password = Base64.decode(testDataElement.element(NODE_PW).getText());
         }
         return readDBData(new DatabaseConnection(sourceUrl, user, password, driverClassName), query);
     }   

@@ -31,6 +31,7 @@ import com.kms.katalon.core.util.internal.Base64;
 import com.kms.katalon.core.util.internal.ExceptionsUtil;
 import com.kms.katalon.core.util.internal.JsonUtil;
 import com.kms.katalon.core.util.internal.PathUtil;
+import com.kms.katalon.util.SAXReaderProvider;
 
 public class CheckpointFactory {
 
@@ -68,7 +69,7 @@ public class CheckpointFactory {
 
     private static final String NODE_DB_USER = "user";
 
-    private static final String NODE_DB_PASSWORD = "password";
+    private static final String NODE_DB_PW = "password";
 
     private static final String NODE_DB_QUERY = "query";
 
@@ -104,7 +105,7 @@ public class CheckpointFactory {
                 throw new IllegalArgumentException(StringConstants.EXC_MSG_CHECKPOINT_DOES_NOT_EXIST);
             }
 
-            SAXReader reader = new SAXReader();
+            SAXReader reader = SAXReaderProvider.newInstance();
             Document document = reader.read(checkpointFile);
             Element checkpointElement = document.getRootElement();
 
@@ -281,10 +282,10 @@ public class CheckpointFactory {
         String password = null;
         if (isSecureUserAccount) {
             validateElementName(sourceInfoElement, NODE_DB_USER);
-            validateElementName(sourceInfoElement, NODE_DB_PASSWORD);
+            validateElementName(sourceInfoElement, NODE_DB_PW);
 
             user = sourceInfoElement.element(NODE_DB_USER).getText();
-            password = Base64.decode(sourceInfoElement.element(NODE_DB_PASSWORD).getText());
+            password = Base64.decode(sourceInfoElement.element(NODE_DB_PW).getText());
         }
 
         return new DatabaseConnection(sourceInfoElement.element(NODE_SOURCE_URL).getText(), user, password);

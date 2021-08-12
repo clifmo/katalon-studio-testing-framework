@@ -5,6 +5,12 @@ import static org.apache.commons.lang.StringUtils.defaultString;
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * A <code>base64</code> util-class
  */
@@ -63,4 +69,10 @@ public class Base64 {
         return data;
     }
 
+    public static String encodeFile(File file) throws IOException {
+        if (!file.exists() || !file.isFile()) {
+            return StringUtils.EMPTY;
+        }
+        return java.util.Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(file));
+    }
 }
