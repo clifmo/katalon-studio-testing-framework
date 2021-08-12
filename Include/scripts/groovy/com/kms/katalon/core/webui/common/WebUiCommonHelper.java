@@ -1208,8 +1208,7 @@ public class WebUiCommonHelper extends KeywordHelper {
         return resized;
     }
 	
-    @SuppressWarnings("unused")
-    private static double getDevicePixelRatio(WebDriver driver) {
+    public static double getDevicePixelRatio(WebDriver driver) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Object executeScriptValue = js.executeScript("return window.devicePixelRatio;");
         double devicePixelRatio = 1;

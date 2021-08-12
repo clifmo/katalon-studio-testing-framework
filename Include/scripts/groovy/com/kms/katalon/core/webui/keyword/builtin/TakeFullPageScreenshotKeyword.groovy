@@ -6,6 +6,7 @@ import java.io.File
 import java.text.MessageFormat
 import java.util.List
 import java.util.concurrent.TimeUnit
+import java.awt.Color
 
 import org.apache.commons.io.FileUtils
 import org.openqa.selenium.Alert
@@ -69,18 +70,21 @@ public class TakeFullPageScreenshotKeyword extends WebUIAbstractKeyword {
         }
 
         String fileName = (String)params[0]
-        boolean isTestOpsVisionCheckPoint = (boolean)params[2]
+        boolean isTestOpsVisionCheckPoint = (boolean)params[4]
         if (!isTestOpsVisionCheckPoint && fileName == null) {
             fileName = defaultFileName()
         }
         List<TestObject> ignoredElements = (List<TestObject>)params[1]
-        FailureHandling failureHandler = params[3] == null ?
-                RunConfiguration.getDefaultFailureHandling() : (FailureHandling)params[3]
-        return takeScreenshot(fileName, ignoredElements, isTestOpsVisionCheckPoint, failureHandler)
+        List<TestObject> hideElements = (List<TestObject>)params[2]
+        Color hideColor = (Color)params[3]
+        FailureHandling failureHandler = params[5] == null ?
+                RunConfiguration.getDefaultFailureHandling() : (FailureHandling)params[5]
+        return takeScreenshot(fileName, ignoredElements, hideElements, hideColor,
+            isTestOpsVisionCheckPoint, failureHandler)
     }
 
     private boolean isValidData(Object... params) {
-        if (params.length != 4) {
+        if (params.length != 6) {
             return false
         }
         
@@ -88,15 +92,23 @@ public class TakeFullPageScreenshotKeyword extends WebUIAbstractKeyword {
             return false;
         }
         
-        if (params[1] != null && !(params[1] instanceof List<TestObject>)) {
+        if (params[1] != null && !(params[1] instanceof List)) {
             return false;
         }
         
-        if (params[2] != null && !(params[2] instanceof Boolean)) {
+        if (params[2] != null && !(params[2] instanceof List)) {
             return false;
         }
         
-        if (params[3] != null && !(params[3] instanceof FailureHandling)) {
+        if (params[3] != null && !(params[3] instanceof Color)) {
+            return false;
+        }
+        
+        if (params[4] != null && !(params[4] instanceof Boolean)) {
+            return false;
+        }
+        
+        if (params[5] != null && !(params[5] instanceof FailureHandling)) {
             return false;
         }
         
@@ -108,9 +120,11 @@ public class TakeFullPageScreenshotKeyword extends WebUIAbstractKeyword {
     }
 
     @CompileStatic
-    public String takeScreenshot(String fileName, List<TestObject> ignoredElements, boolean isTestOpsVisionElement, FailureHandling flowControl) {
+    public String takeScreenshot(String fileName, List<TestObject> ignoredElements, List<TestObject> hideElements,
+            Color hideColor, boolean isTestOpsVisionElement, FailureHandling flowControl) {
         return WebUIKeywordMain.runKeyword({
-            String screenFileName = FileUtil.takeFullPageScreenshot(fileName, ignoredElements, isTestOpsVisionElement)
+            String screenFileName = FileUtil.takeFullPageScreenshot(fileName, ignoredElements, hideElements, hideColor,
+                 isTestOpsVisionElement)
             if (screenFileName != null) {
                 Map<String, String> attributes = new HashMap<>()
                 attributes.put(StringConstants.XML_LOG_ATTACHMENT_PROPERTY, screenFileName)

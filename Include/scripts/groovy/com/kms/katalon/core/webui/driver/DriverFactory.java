@@ -66,8 +66,10 @@ import com.kms.katalon.core.logging.KeywordLogger;
 import com.kms.katalon.core.logging.LogLevel;
 import com.kms.katalon.core.network.ProxyInformation;
 import com.kms.katalon.core.network.ProxyOption;
+import com.kms.katalon.core.util.internal.JsonUtil;
 import com.kms.katalon.core.util.internal.ProxyUtil;
 import com.kms.katalon.core.webui.common.WebUiCommonHelper;
+import com.kms.katalon.core.webui.constants.CoreWebuiMessageConstants;
 import com.kms.katalon.core.webui.constants.StringConstants;
 import com.kms.katalon.core.webui.driver.firefox.CFirefoxDriver47;
 import com.kms.katalon.core.webui.driver.firefox.CGeckoDriver;
@@ -97,8 +99,6 @@ import okhttp3.Route;
 
 public class DriverFactory {
 
-    private static final String KATALON_SAVE_MHTML_ADDON_CHROME_RELATIVE_PATH = File.separator + "Chrome" + File.separator + "katalon-save-mhtml";
-    
     private static final int DEFAULT_CONNECT_TIMEOUT_IN_SECONDS = 120;
 
     private static final int DEFAULT_READ_TIMEOUT_IN_SECONDS = 10800;
@@ -387,9 +387,33 @@ public class DriverFactory {
                 throw new StepFailedException(
                         MessageFormat.format(StringConstants.DRI_ERROR_DRIVER_X_NOT_IMPLEMENTED, driver.getName()));
         }
+        isTimeCapsuleAvailable(driver);
         saveWebDriverSessionData(webDriver);
         switchToSmartWaitWebDriver(webDriver);
         return webDriver;
+    }
+
+    /**
+     * Check whether the Time Capsule is enabled or not, if yes, continue to check DriverType is Chrome or not. Because
+     * Katalon support Time Capsule for Chrome Browser only.
+     * 
+     * @param driver
+     * @return true if Time Capsule is enabled and DriverType is Chrome. Otherwise, return false.
+     */
+    private static boolean isTimeCapsuleAvailable(WebUIDriverType driver) {
+        if (!RunConfiguration.shouldApplyTimeCapsule()) {
+            return false;
+        }
+        switch (driver) {
+            case CHROME_DRIVER:
+            case HEADLESS_DRIVER:
+            case EDGE_CHROMIUM_DRIVER:
+                return true;
+            default:
+                KeywordLogger.getInstance(KatalonSmartEventListener.class)
+                        .logWarning(CoreWebuiMessageConstants.MSG_TIME_CAPSULE_IS_NOT_SUPPORTED_ON_CURRENT_BROWSER);
+                return false;
+        }
     }
 
     private static CSafariDriver createNewSafariDriver(DesiredCapabilities desireCapibilities) {
@@ -418,21 +442,10 @@ public class DriverFactory {
     }
 
     private static DesiredCapabilities addKatalonExtensionsToChrome(DesiredCapabilities capabilities) {
-        String argumentValue = StringUtils.EMPTY;
-        String pathToTimeCapsuleExtension = StringUtils.EMPTY;
-        String pathToSmartWaitExtension = StringUtils.EMPTY;
-        if (shouldInstallTimeCapsuleExtension()) {
-            pathToTimeCapsuleExtension = installExtensionFromFile(getTimeCapsuleExtensionFile());
-        }
+        String argumentValue = LOAD_EXTENSION_CHROME_PREFIX;
         if (shouldInstallSmartWait()) {
-            pathToSmartWaitExtension = installExtensionFromFile(getChromeExtensionFile());
-        }
-        if (!StringUtils.isEmpty(pathToTimeCapsuleExtension) && !StringUtils.isEmpty(pathToSmartWaitExtension)) {
-            argumentValue = LOAD_EXTENSION_CHROME_PREFIX + pathToTimeCapsuleExtension + "," + pathToSmartWaitExtension;
-        } else if (!StringUtils.isEmpty(pathToTimeCapsuleExtension)) {
-            argumentValue = LOAD_EXTENSION_CHROME_PREFIX + pathToTimeCapsuleExtension;
-        } else {
-            argumentValue = LOAD_EXTENSION_CHROME_PREFIX + pathToSmartWaitExtension;
+            String pathToSmartWaitExtension = installExtensionFromFile(getChromeExtensionFile());
+            argumentValue += pathToSmartWaitExtension;
         }
         WebDriverPropertyUtil.addArgumentsForChrome(capabilities, argumentValue);
         return capabilities;
@@ -449,20 +462,6 @@ public class DriverFactory {
         }
         return pathToExtension;
     }
-
-
-    private static boolean shouldInstallTimeCapsuleExtension() {
-        return RunConfiguration.shouldApplyTimeCapsule();
-    }
-
-    private static File getTimeCapsuleExtensionFile() {
-        try {
-            return new File(FileUtil.getExtensionsDirectory(), KATALON_SAVE_MHTML_ADDON_CHROME_RELATIVE_PATH);
-        } catch (IOException e) {
-        }
-        return null;
-    }
-
     
     private static File getChromeExtensionFile() {
         try {
@@ -793,6 +792,12 @@ public class DriverFactory {
     private static void logBrowserRunData(WebDriver webDriver) {
         if (webDriver == null) {
             return;
+        }
+        String serverUrl = getRemoteWebDriverServerUrl();
+        if (StringUtils.isNotEmpty(serverUrl) && webDriver instanceof RemoteWebDriver) {
+            logger.logRunData("remoteDriverUrl", serverUrl);
+            RemoteWebDriver remoteDriver = (RemoteWebDriver) webDriver;
+            logger.logRunData("desiredCapabilities", JsonUtil.toJson(remoteDriver.getCapabilities().asMap()));
         }
 
         logger.logRunData("sessionId", getRemoteSessionId(webDriver).toString());

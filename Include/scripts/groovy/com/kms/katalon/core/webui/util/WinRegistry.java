@@ -29,7 +29,7 @@ public class WinRegistry {
     private static Class<? extends Preferences> userClass = userRoot.getClass();
 
     public static final String FEATURE_CONTROL_REGISTRY_PATH = "Software\\Microsoft\\Internet Explorer\\Main\\FeatureControl";
-    public static final String FEATURE_HTTP_USERNAME_PASSWORD_DISABLE_SUBKEY = "FEATURE_HTTP_USERNAME_PASSWORD_DISABLE";
+    public static final String FEATURE_HTTP_USERNAME_PW_DISABLE_SUBKEY = "FEATURE_HTTP_USERNAME_PASSWORD_DISABLE";
     public static final String ADD_DWORD_IEXPLORE_EXE = "REG ADD \"HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_HTTP_USERNAME_PASSWORD_DISABLE\" /v iexplore.exe /t REG_DWORD /d 0 /f";
 
     static {
@@ -64,8 +64,8 @@ public class WinRegistry {
         List<String> subKeys;
         subKeys = readStringSubKeys(HKEY_CURRENT_USER, FEATURE_CONTROL_REGISTRY_PATH);
 
-        if (!subKeys.contains(FEATURE_HTTP_USERNAME_PASSWORD_DISABLE_SUBKEY)) {
-            createKey(FEATURE_CONTROL_REGISTRY_PATH + "\\" + FEATURE_HTTP_USERNAME_PASSWORD_DISABLE_SUBKEY);
+        if (!subKeys.contains(FEATURE_HTTP_USERNAME_PW_DISABLE_SUBKEY)) {
+            createKey(FEATURE_CONTROL_REGISTRY_PATH + "\\" + FEATURE_HTTP_USERNAME_PW_DISABLE_SUBKEY);
             Runtime.getRuntime().exec(ADD_DWORD_IEXPLORE_EXE);
         }
     }
