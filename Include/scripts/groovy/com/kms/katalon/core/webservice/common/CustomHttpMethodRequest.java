@@ -1,8 +1,6 @@
 package com.kms.katalon.core.webservice.common;
 
-import org.apache.http.client.methods.HttpUriRequest;
-
-public interface CustomHttpMethodRequest extends HttpUriRequest {
+public interface CustomHttpMethodRequest {
 
     void setMethod(String method);
 }

@@ -43,6 +43,7 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
+import com.kms.katalon.core.configuration.RunConfiguration;
 import com.kms.katalon.core.model.SSLClientCertificateSettings;
 import com.kms.katalon.core.network.ProxyInformation;
 import com.kms.katalon.core.network.ProxyOption;
@@ -75,7 +76,11 @@ public class HttpUtil {
     }
 
     public static HttpResponse sendRequest(HttpUriRequest request) throws SendRequestException {
-        return sendRequest(request, true, null, SSLCertificateOption.BYPASS, null);
+        return sendRequest(request, null);
+    }
+
+    public static HttpResponse sendRequest(HttpUriRequest request, ProxyInformation proxyInformation) throws SendRequestException {
+        return sendRequest(request, true, proxyInformation, SSLCertificateOption.BYPASS, null);
     }
 
     public static HttpResponse sendRequest(
@@ -244,7 +249,7 @@ public class HttpUtil {
             IOException {
 
         HttpContext httpContext = new BasicHttpContext();
-        SSLContext sc = SSLContext.getInstance(TLS);
+        SSLContext sc = SSLContext.getInstance(getHttpsProtocol());
         sc.init(getKeyManagers(clientCertSettings), getTrustManagers(certificateOption), null);
         Registry<ConnectionSocketFactory> reg = RegistryBuilder
                 .<ConnectionSocketFactory>create()
@@ -253,6 +258,13 @@ public class HttpUtil {
                 .build();
         httpContext.setAttribute(SOCKET_FACTORY_REGISTRY, reg);
         return httpContext;
+    }
+
+    private static String getHttpsProtocol() {
+        if (RunConfiguration.getProperty(RunConfiguration.HTTPS_PROTOCOL) != null) {
+            return (String) RunConfiguration.getProperty(RunConfiguration.HTTPS_PROTOCOL);
+        }
+        return TLS;
     }
 
     private static TrustManager[] getTrustManagers(SSLCertificateOption certificateOption) throws IOException {
