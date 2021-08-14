@@ -1,7 +1,7 @@
 package com.kms.katalon.core.webui.keyword.builtin
 
 import groovy.transform.CompileStatic
-
+import java.awt.Color
 import java.io.File
 import java.text.MessageFormat
 import java.util.concurrent.TimeUnit
@@ -69,18 +69,20 @@ public class TakeAreaScreenshotKeyword extends WebUIAbstractKeyword {
         }
 
         String fileName = (String)params[0]
-        boolean isTestOpsVisionCheckPoint = (boolean)params[2]
+        boolean isTestOpsVisionCheckPoint = (boolean)params[4]
         if (!isTestOpsVisionCheckPoint && fileName == null) {
             fileName = defaultFileName()
         }
         Rectangle rect = (Rectangle)params[1]
-        FailureHandling failureHandler = params[3] == null ?
-                RunConfiguration.getDefaultFailureHandling() : (FailureHandling)params[3]
-        return takeScreenshot(fileName, rect, isTestOpsVisionCheckPoint, failureHandler)
+        List<TestObject> hideElments = (List<TestObject>)params[2]
+        Color hideColor = (Color)params[3]
+        FailureHandling failureHandler = params[5] == null ?
+                RunConfiguration.getDefaultFailureHandling() : (FailureHandling)params[5]
+        return takeScreenshot(fileName, rect, hideElments, hideColor, isTestOpsVisionCheckPoint, failureHandler)
     }
 
     private boolean isValidData(Object... params) {
-        if (params.length != 4) {
+        if (params.length != 6) {
             return false
         }
         
@@ -92,11 +94,19 @@ public class TakeAreaScreenshotKeyword extends WebUIAbstractKeyword {
             return false;
         }
         
-        if (params[2] == null || !(params[2] instanceof Boolean)) {
+        if (params[2] != null && !(params[2] instanceof List)) {
             return false;
         }
         
-        if (params[3] != null && !(params[3] instanceof FailureHandling)) {
+        if (params[3] != null && !(params[3] instanceof Color)) {
+            return false;
+        }
+        
+        if (params[4] == null || !(params[4] instanceof Boolean)) {
+            return false;
+        }
+        
+        if (params[5] != null && !(params[5] instanceof FailureHandling)) {
             return false;
         }
         
@@ -108,9 +118,11 @@ public class TakeAreaScreenshotKeyword extends WebUIAbstractKeyword {
     }
 
     @CompileStatic
-    public String takeScreenshot(String fileName, Rectangle rect, boolean isTestOpsVisionElement, FailureHandling flowControl) {
+    public String takeScreenshot(String fileName, Rectangle rect, List<TestObject> hideElements, Color hideColor,
+            boolean isTestOpsVisionElement, FailureHandling flowControl) {
         return WebUIKeywordMain.runKeyword({
-            String screenFileName = FileUtil.takeAreaScreenshot(fileName, rect, isTestOpsVisionElement)
+            String screenFileName = FileUtil.takeAreaScreenshot(fileName, rect, hideElements, hideColor,
+                isTestOpsVisionElement)
             if (screenFileName != null) {
                 Map<String, String> attributes = new HashMap<>()
                 attributes.put(StringConstants.XML_LOG_ATTACHMENT_PROPERTY, screenFileName)

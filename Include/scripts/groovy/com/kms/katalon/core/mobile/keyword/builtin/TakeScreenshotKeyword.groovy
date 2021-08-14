@@ -98,7 +98,7 @@ public class TakeScreenshotKeyword extends MobileAbstractKeyword {
                 internalSwitchToNativeContext(driver)
                 if (isTestOpsVisionCheckPoint) {
                     if (StringUtils.isBlank(fileName)) {
-                        MobileKeywordMain.stepFailed(StringConstants.KW_MSG_SCREENSHOT_EXCEPTION_FILENAME_NULL_EMPTY, flowControl, null, true)
+                        MobileKeywordMain.stepFailed(StringConstants.KW_MSG_SCREENSHOT_EXCEPTION_FILENAME_NULL_EMPTY, flowControl, null, false)
                     }
                     
                     BufferedImage screenshot = MobileScreenCaptor.takeViewportScreenshot(driver, ignoredElements, hidingColor)

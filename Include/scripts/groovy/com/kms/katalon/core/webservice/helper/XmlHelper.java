@@ -3,12 +3,15 @@ package com.kms.katalon.core.webservice.helper;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.kms.katalon.util.TransformerFactoryProvider;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -141,7 +144,7 @@ public final class XmlHelper {
             Source xmlInput = new StreamSource(new StringReader(input));
             StringWriter stringWriter = new StringWriter();
             StreamResult xmlOutput = new StreamResult(stringWriter);
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            TransformerFactory transformerFactory = TransformerFactoryProvider.newInstance();
             // This statement works with JDK 6
             transformerFactory.setAttribute("indent-number", indent);
              
@@ -161,7 +164,7 @@ public final class XmlHelper {
                 Source xmlInput = new StreamSource(new StringReader(input));
                 StringWriter stringWriter = new StringWriter();
                 StreamResult xmlOutput = new StreamResult(stringWriter);
-                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                TransformerFactory transformerFactory = TransformerFactoryProvider.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", String.valueOf(indent));

@@ -131,4 +131,9 @@ public class ProcessUtil {
         }
         return output;
     }
+
+    public static boolean isKRE() {
+        return org.eclipse.core.runtime.Platform.getProduct() != null
+                && org.eclipse.core.runtime.Platform.getProduct().getId().equals("com.kms.katalon.console.product");
+    }
 }

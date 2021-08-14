@@ -50,7 +50,7 @@ public class StringConstants {
     
     public static final String SETTINGS_KEYSTORE = "network.keyStore";
     
-    public static final String SETTINGS_KEYSTORE_PASSWORD = "network.keyStorePassword";
+    public static final String SETTINGS_KEYSTORE_PW = "network.keyStorePassword";
     
     public static final String KW_LOG_INFO_VERIFICATION_START = CoreWebserviceMessageConstants.KW_LOG_INFO_VERIFICATION_START;
     

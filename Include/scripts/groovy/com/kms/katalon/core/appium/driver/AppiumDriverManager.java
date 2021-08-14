@@ -710,7 +710,7 @@ public class AppiumDriverManager {
                     new String[] { "xcodebuild", "-version", "|", "grep", "\"" + XCODE + ".*\"" });
             String majorVersionString = xcodeVersion.substring(XCODE.length(), xcodeVersion.indexOf(".")).trim();
             return Integer.parseInt(majorVersionString);
-        } catch (IOException | InterruptedException | NumberFormatException e) {
+        } catch (IOException | InterruptedException | NumberFormatException | StringIndexOutOfBoundsException e) {
             throw new ExecutionException("Unable to find xcode version", e);
         }
 

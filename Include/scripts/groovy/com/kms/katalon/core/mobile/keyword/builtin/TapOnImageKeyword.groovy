@@ -58,7 +58,7 @@ public class TapOnImageKeyword extends MobileAbstractKeyword {
             int y = element.getLocation().y
 
             logger.logInfo(MessageFormat.format("Tap on image at location ({0}, {1})", x, y))
-            TouchAction<?> tap = new TouchAction<WebElement>(MobileDriverFactory.getDriver())
+            TouchAction<?> tap = new TouchAction<>(MobileDriverFactory.getDriver())
                     .tap(PointOption.point(x, y))
                     .waitAction(WaitOptions.waitOptions(Duration.ofMillis(50)));
             tap.perform();

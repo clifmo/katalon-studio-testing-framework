@@ -22,7 +22,7 @@ import com.kms.katalon.core.util.internal.ProxyUtil;
 
 public class WebDriverProxyUtil {
 
-    private static final String PROP_SOCKS_PASSWORD = "socksPassword";
+    private static final String PROP_SOCKS_PW = "socksPassword";
 
     private static final String PROP_SOCKS_USERNAME = "socksUsername";
 
@@ -72,7 +72,7 @@ public class WebDriverProxyUtil {
                     case SOCKS:
                         proxyMap.put(PROP_SOCKS_PROXY, proxyString);
                         proxyMap.put(PROP_SOCKS_USERNAME, proxyInformation.getUsername());
-                        proxyMap.put(PROP_SOCKS_PASSWORD, proxyInformation.getPassword());
+                        proxyMap.put(PROP_SOCKS_PW, proxyInformation.getPassword());
                         break;
                 }
                 break;
@@ -122,7 +122,7 @@ public class WebDriverProxyUtil {
                     case SOCKS:
                         proxyMap.put(PROP_SOCKS_PROXY, proxyString);
                         proxyMap.put(PROP_SOCKS_USERNAME, proxyInformation.getUsername());
-                        proxyMap.put(PROP_SOCKS_PASSWORD, proxyInformation.getPassword());
+                        proxyMap.put(PROP_SOCKS_PW, proxyInformation.getPassword());
                         break;
                 }
                 break;

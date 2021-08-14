@@ -16,7 +16,7 @@ public class AndroidProperties {
 	public static final String ANDROID_FOCUSED = "focused";
 	public static final String ANDROID_SCROLLABLE = "scrollable";
 	public static final String ANDROID_LONG_CLICKABLE = "long-clickable";
-	public static final String ANDROID_PASSWORD = "password";
+	public static final String ANDROID_PW = "password";
 	public static final String ANDROID_SELECTED = "selected";
 	public static final String ANDROID_BOUNDS = "bounds";
     public static final String[] ANDROID_TYPICAL_PROPERTIES = new String[] { ANDROID_CLASS, ANDROID_INSTANCE, ANDROID_TEXT, ANDROID_RESOURCE_ID };

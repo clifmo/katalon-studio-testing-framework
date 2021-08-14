@@ -11,8 +11,10 @@ import org.dom4j.io.SAXReader;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.osgi.framework.FrameworkUtil;
+import org.xml.sax.SAXException;
 
 import com.kms.katalon.core.exception.KatalonRuntimeException;
+import com.kms.katalon.util.SAXReaderProvider;
 
 public class VerificationScriptSnippetFactory {
     
@@ -36,7 +38,7 @@ public class VerificationScriptSnippetFactory {
                 null);
         
         try {
-            SAXReader reader = new SAXReader();
+            SAXReader reader = SAXReaderProvider.newInstance();            
             Document document = reader.read(url);
             Element rootElement = document.getRootElement();
             
@@ -53,6 +55,8 @@ public class VerificationScriptSnippetFactory {
                 }
             }
         } catch (DocumentException e) {
+            throw new KatalonRuntimeException(e);
+        } catch (SAXException e) {
             throw new KatalonRuntimeException(e);
         }
         

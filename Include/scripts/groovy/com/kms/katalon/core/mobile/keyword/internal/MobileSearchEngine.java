@@ -507,8 +507,8 @@ public class MobileSearchEngine {
                 actualValue = actualElement.getAttribute(AndroidProperties.ANDROID_PACKAGE);
                 break;
 
-            case AndroidProperties.ANDROID_PASSWORD:
-                actualValue = actualElement.getAttribute(AndroidProperties.ANDROID_PASSWORD);
+            case AndroidProperties.ANDROID_PW:
+                actualValue = actualElement.getAttribute(AndroidProperties.ANDROID_PW);
                 break;
 
             case AndroidProperties.ANDROID_RESOURCE_ID:

@@ -4,7 +4,6 @@ import static com.kms.katalon.core.constants.StringConstants.DF_CHARSET;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.security.AccessController;
 import java.text.MessageFormat;
 import java.util.Collections;
@@ -18,8 +17,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.groovy.ast.MethodNode;
 import org.codehaus.groovy.control.CompilationFailedException;
+import org.codehaus.groovy.control.MultipleCompilationErrorsException;
 
-import com.google.common.hash.Hashing;
 import com.kms.katalon.core.annotation.SetUp;
 import com.kms.katalon.core.annotation.SetupTestCase;
 import com.kms.katalon.core.annotation.TearDown;
@@ -33,9 +32,7 @@ import com.kms.katalon.core.context.internal.ExecutionEventManager;
 import com.kms.katalon.core.context.internal.ExecutionListenerEvent;
 import com.kms.katalon.core.context.internal.InternalTestCaseContext;
 import com.kms.katalon.core.driver.internal.DriverCleanerCollector;
-import com.kms.katalon.core.execution.TestExecutionDataProvider;
-import com.kms.katalon.core.execution.TestExecutionSocketServer;
-import com.kms.katalon.core.execution.TestExecutionSocketServerEndpoint;
+import com.kms.katalon.core.helper.ChromeSnapshotHelper;
 import com.kms.katalon.core.keyword.internal.KeywordExecutionContext;
 import com.kms.katalon.core.logging.ErrorCollector;
 import com.kms.katalon.core.logging.KeywordLogger;
@@ -84,8 +81,7 @@ public class TestCaseExecutor {
 
     private TestSuiteExecutor testSuiteExecutor;
 
-    private static final int TEST_EXECUTION_WEBSOCKET_PORT = 12954;
-    
+    private ChromeSnapshotHelper chromeSnapshotTool;
 
     public void setTestSuiteExecutor(TestSuiteExecutor testSuiteExecutor) {
         this.testSuiteExecutor = testSuiteExecutor;
@@ -100,6 +96,8 @@ public class TestCaseExecutor {
         this.eventManager = eventManager;
 
         this.testCaseContext = testCaseContext;
+
+        this.chromeSnapshotTool = new ChromeSnapshotHelper();
     }
 
     public TestCaseExecutor(TestCaseBinding testCaseBinding, ScriptEngine engine, ExecutionEventManager eventManager,
@@ -150,8 +148,11 @@ public class TestCaseExecutor {
         // Collect AST nodes for script of test case
         try {
             methodNodeCollector = new TestCaseMethodNodeCollector(testCase);
-        } catch (IOException e) {
-            onSetupError(e);
+        } catch (IOException ioException) {
+            onSetupError(ioException);
+            return false;
+        } catch (MultipleCompilationErrorsException multiCompilationErrException) {
+            onSetupError(multiCompilationErrException);
             return false;
         }
         try {
@@ -229,10 +230,6 @@ public class TestCaseExecutor {
             if (testCaseContext.isMainTestCase()) {
                 eventManager.publicEvent(ExecutionListenerEvent.BEFORE_TEST_CASE, new Object[] { testCaseContext });
             }
-
-            if (testSuiteExecutor == null) {
-                openExecutionEndNotifyingClient();
-            }
             // Expose current test case ID test script
             RunConfiguration.getExecutionProperties().put(RunConfiguration.CURRENT_TESTCASE,
                     testCaseContext.getTestCaseId());
@@ -264,7 +261,14 @@ public class TestCaseExecutor {
             // Notify test execution server about test failure here if executing a Test Case
             if (!testCaseResult.getTestStatus().getStatusValue().equals(TestStatusValue.PASSED)
                     && RunConfiguration.shouldApplyTimeCapsule()) {
-                notifyTestExecutionSocketServerEndpoint(testCaseContext.getTestCaseId(), logger.getLogFolderPath());
+                String logFolderPath = logger.getLogFolderPath();
+                String testArtifactFolderPath = StringUtils.isEmpty(logFolderPath) ? RunConfiguration.getProjectDir()
+                        : logFolderPath;
+                try {
+                    this.chromeSnapshotTool.captureSnapshot(testArtifactFolderPath, testCaseContext.getTestCaseId());
+                } catch (Exception error) {
+                    logger.logWarning(error.getMessage(), null, error);
+                }
             }
 
             testCaseContext.setTestCaseStatus(testCaseResult.getTestStatus().getStatusValue().name());
@@ -285,35 +289,6 @@ public class TestCaseExecutor {
 
             postExecution();
 
-        }
-    }
-    
-    private static void openExecutionEndNotifyingClient() {
-        TestExecutionSocketServer.getInstance().start(TestExecutionSocketServerEndpoint.class,
-                TEST_EXECUTION_WEBSOCKET_PORT);
-    }
-    
-    private static String encode(String input) {
-        return Hashing.sha256().hashString(input, StandardCharsets.UTF_8).toString();
-    }
-
-    /**
-     * Notify the client socket in browser that it's time to capture the MHTML
-     * of a particular test execution. This method blocks until the handler
-     * finishes processing the MHTML
-     * 
-     * @param testCaseId
-     * @param logFolderPath
-     */
-    private void notifyTestExecutionSocketServerEndpoint(String testCaseId, String logFolderPath) {
-        TestExecutionSocketServerEndpoint client = TestExecutionSocketServer.getInstance().getEndpoint();
-        Map<String, String> data = new HashMap<>();
-        data.put(TestExecutionSocketServerEndpoint.TEST_NAME, testCaseId);
-        data.put(TestExecutionSocketServerEndpoint.TEST_ARTIFACT_FOLDER,
-                StringUtils.isEmpty(logFolderPath) ? RunConfiguration.getProjectDir() : logFolderPath);
-        TestExecutionDataProvider.getInstance().addTestExecutionData(encode(testCaseId), data);
-        if (client != null) {
-            client.notifyExecutionEndedAndWaitForMHTML(data);
         }
     }
 

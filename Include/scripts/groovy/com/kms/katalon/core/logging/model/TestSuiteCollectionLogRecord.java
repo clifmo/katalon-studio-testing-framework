@@ -23,8 +23,6 @@ public class TestSuiteCollectionLogRecord {
     private String totalFailedTestCases;
     
     private String totalTestCases;
-    
-    private String totalSkippedTestCases;
 
     public String getId() {
         return id;
@@ -88,14 +86,6 @@ public class TestSuiteCollectionLogRecord {
 
     public void setTotalErrorTestCases(String totalErrorTestCases) {
         this.totalErrorTestCases = totalErrorTestCases;
-    }
-    
-    public void setTotalSkippedTestCases(String totalSkippedTestCases) {
-        this.totalSkippedTestCases = totalSkippedTestCases;
-    }
-    
-    public String getTotalSkippedTestCases() {
-        return totalSkippedTestCases;
     }
 
     public String getTotalFailedTestCases() {

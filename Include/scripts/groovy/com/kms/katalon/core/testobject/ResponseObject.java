@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -26,6 +26,8 @@ import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
 import com.kms.katalon.core.testobject.impl.HttpTextBodyContent;
+import com.kms.katalon.util.DocumentBuilderProvider;
+import com.kms.katalon.util.TransformerFactoryProvider;
 
 public class ResponseObject implements PerformanceResourceTiming, HttpMessage {
 
@@ -69,8 +71,8 @@ public class ResponseObject implements PerformanceResourceTiming, HttpMessage {
     public String getResponseBodyContent() throws Exception {
         if (responseText != null) {
             if (contentType != null && contentType.startsWith("application/xml")) {
-                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-                Document doc = dbf.newDocumentBuilder().parse(new InputSource(new StringReader(responseText)));
+                DocumentBuilder db = DocumentBuilderProvider.newBuilderInstance();
+                Document doc = db.parse(new InputSource(new StringReader(responseText)));
                 XPath xPath = XPathFactory.newInstance().newXPath();
                 Node node = (Node) xPath.evaluate("//*//*//*", doc, XPathConstants.NODE);
                 return nodeToString(node);
@@ -128,7 +130,8 @@ public class ResponseObject implements PerformanceResourceTiming, HttpMessage {
 
     private String nodeToString(Node node) throws TransformerException {
         StringWriter writer = new StringWriter();
-        Transformer xform = TransformerFactory.newInstance().newTransformer();
+        TransformerFactory tf = TransformerFactoryProvider.newInstance();
+        Transformer xform = tf.newTransformer();
         xform.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
         xform.transform(new DOMSource(node), new StreamResult(writer));
         return writer.toString();

@@ -1097,6 +1097,8 @@ public class CoreWebuiMessageConstants extends NLS {
 
     // Screenshot keyword
     public static String KW_LOG_INFO_SCREENSHOT_FULLPAGE_FAIL_HIDE_OBJECT;
+    
+    public static String KW_LOG_INFO_SCREENSHOT_FULLPAGE_FAIL_HIDE_OBJECT_OUT_OF_IMAGE;
 
     public static String KW_LOG_INFO_SCREENSHOT_FULLPAGE_HIDDEN_COUNTER;
 
@@ -1107,6 +1109,33 @@ public class CoreWebuiMessageConstants extends NLS {
     public static String KW_SCREENSHOT_EXCEPTION_AREA_NULL;
 
     public static String KW_SCREENSHOT_EXCEPTION_AREA_LARGER;
+    
+    public static String KW_SCREENSHOT_EXCEPTION_WHILE_ADDING_TEXT;
+
+    public static String MSG_ERR_IMAGE_TEXT_POSITION_MUST_BE_VALID;
+
+    public static String MSG_ERR_INVALID_FONT;
+
+    public static String MSG_ERR_PROPERTY_MUST_NOT_BE_NULL;
+
+    public static String MSG_ERR_PROPERTY_MUST_BE_A_POSITIVE_INT;
+
+    public static String MSG_ERR_INVALID_PROPERTY;
+    
+    public static String MSG_ERR_INVALID_SCREENSHOT_OPTIONS;
+
+    public static String MSG_ERR_IMAGE_TEXT_TOO_LONG;
+    
+    public static String MSG_ERR_CANNOT_PARSE_TO_CLASS;
+    
+    public static String MSG_ERR_SCREENSHOT_EXCEPTION_IMAGE_TOO_LARGE;
+
+    public static String MSG_WARN_FONT_SIZE_TOO_LARGE;
+
+    public static String MSG_WARN_INVALID_OPTION;
+
+    // Time Capsule message
+    public static String MSG_TIME_CAPSULE_IS_NOT_SUPPORTED_ON_CURRENT_BROWSER;
 
     static {
         // initialize resource bundle

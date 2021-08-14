@@ -42,8 +42,10 @@ public class TakeAreaScreenshotKeyword extends MobileAbstractKeyword {
         
         String fileName = ((String)params[0])
         boolean isTestOpsVisionCheckPoint = (boolean)params[4];
-        if (!isTestOpsVisionCheckPoint && fileName == null) {
-            fileName = defaultFileName()
+        if (!isTestOpsVisionCheckPoint) {
+            if (fileName == null) {
+                fileName = defaultFileName()
+            }
         } else {
             fileName = TestOpsUtil.replaceTestOpsVisionFileName(fileName.trim())
         }
@@ -97,12 +99,12 @@ public class TakeAreaScreenshotKeyword extends MobileAbstractKeyword {
                 throws StepFailedException {
         return MobileKeywordMain.runKeyword({
             if (isTestOpsVisionCheckPoint && StringUtils.isBlank(fileName)) {
-                MobileKeywordMain.stepFailed(StringConstants.KW_MSG_SCREENSHOT_EXCEPTION_FILENAME_NULL_EMPTY, flowControl, null, true)
+                MobileKeywordMain.stepFailed(StringConstants.KW_MSG_SCREENSHOT_EXCEPTION_FILENAME_NULL_EMPTY, flowControl, null, false)
             }
             
             if (rect == null) {
-                MobileKeywordMain.stepFailed(StringConstants.KW_MSG_SCREENSHOT_EXCEPTION_AREA_NULL, flowControl, null, true)
-            }
+                MobileKeywordMain.stepFailed(StringConstants.KW_MSG_SCREENSHOT_EXCEPTION_AREA_NULL, flowControl, null, false)
+            }   
             
             AppiumDriver driver = getAnyAppiumDriver()
             String context = driver.getContext()

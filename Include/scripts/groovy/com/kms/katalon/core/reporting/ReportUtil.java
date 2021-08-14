@@ -240,7 +240,6 @@ public class ReportUtil {
         String testSuiteCollectionTotalTests = suiteCollectionLogRecord.getTotalTestCases();
         String testSuiteCollectiontotalError = suiteCollectionLogRecord.getTotalErrorTestCases();
         String testSuiteCollectionTotalFailure = suiteCollectionLogRecord.getTotalFailedTestCases();
-        String testSuiteCollectionTotalSkips = suiteCollectionLogRecord.getTotalSkippedTestCases();
         String testSuiteCollectionDuration = ((float) (suiteCollectionLogRecord.getEndTime()
                 - suiteCollectionLogRecord.getStartTime()) / 1000) + "";
 
@@ -249,8 +248,6 @@ public class ReportUtil {
         tss.setErrors(testSuiteCollectiontotalError);
         // failures: total number of failed tests from all test suite
         tss.setFailures(testSuiteCollectionTotalFailure);
-        // failures: total number of failed tests from all test suite
-        tss.setSkips(testSuiteCollectionTotalSkips);
         // tests: total number of tests from all test suite
         tss.setTests(testSuiteCollectionTotalTests);
         // time: in seconds to execute all test suites
@@ -280,8 +277,6 @@ public class ReportUtil {
         tss.setErrors(ts.getErrors());
         // failures: total number of failed tests from all test suite
         tss.setFailures(ts.getFailures());
-        // skips: total number of skipped tests from all test suite
-        tss.setSkips(ts.getSkipped());
         // tests: total number of tests from all test suite
         tss.setTests(ts.getTests());
         // time: in seconds to execute all test suites

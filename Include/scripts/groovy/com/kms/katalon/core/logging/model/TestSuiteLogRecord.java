@@ -12,6 +12,7 @@ import org.apache.commons.io.FilenameUtils;
 import com.kms.katalon.core.configuration.RunConfiguration;
 import com.kms.katalon.core.constants.StringConstants;
 import com.kms.katalon.core.logging.model.TestStatus.TestStatusValue;
+import com.microsoft.sqlserver.jdbc.StringUtils;
 
 public class TestSuiteLogRecord extends AbstractLogRecord {
 
@@ -23,10 +24,13 @@ public class TestSuiteLogRecord extends AbstractLogRecord {
     
     private String testSuiteCollectionId;
 
+    private Map<String, String> buildData;
+
     public TestSuiteLogRecord(String name, String logFolder) {
         super(name);
         this.logFolder = logFolder;
         runData = new HashMap<String, String>();
+        buildData = new HashMap<String, String>();
         setType(ILogRecord.LOG_TYPE_TEST_SUITE);
     }
 
@@ -124,12 +128,38 @@ public class TestSuiteLogRecord extends AbstractLogRecord {
                 : "";
     }
 
+    public String getQtestBuildNumber() {
+        return getBuildData().containsKey("qTestBuildNumber") ? getBuildData().get("qTestBuildNumber") : "";
+    }
+
+    public String getQtestBuildURL() {
+        return getBuildData().containsKey("qTestBuildURL") ? getBuildData().get("qTestBuildURL") : "";
+    }
+
+    public String getAzureDefinitionId() {
+        if (getBuildData().containsKey("adoDefinitionId")) {
+            return getBuildData().get("adoDefinitionId");
+        }
+        if (getBuildData().containsKey("adoDefinitionID")) {
+            return getBuildData().get("adoDefinitionID");
+        }
+        return StringUtils.EMPTY;
+    }
+
     public Map<String, String> getRunData() {
         return runData;
     }
 
     public void addRunData(Map<String, String> runData) {
         this.runData.putAll(runData);
+    }
+
+    public Map<String, String> getBuildData() {
+        return buildData;
+    }
+
+    public void addBuildData(Map<String, String> buildData) {
+        this.buildData.putAll(buildData);
     }
 
     public <T extends ILogRecord> int getChildIndex(T child) {

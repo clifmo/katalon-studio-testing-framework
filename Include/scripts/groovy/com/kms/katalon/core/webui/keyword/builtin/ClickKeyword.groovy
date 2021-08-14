@@ -2,7 +2,6 @@ package com.kms.katalon.core.webui.keyword.builtin
 
 import java.text.MessageFormat
 
-import org.codehaus.groovy.runtime.ExceptionUtils
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement

@@ -69,7 +69,7 @@ public class RequestHeaderConstants {
 
     public static final String USER_AGENT = "User-Agent";
 
-	public static final String SIGNATURE_METHOD_PASSWORD_CREDENTIALS = "Password Credentials";
+	public static final String SIGNATURE_METHOD_PW_CREDENTIALS = "Password Credentials";
 
 	public static final String SIGNATURE_METHOD_AUTHORIZTION_CODE = "Authorization Code";
 

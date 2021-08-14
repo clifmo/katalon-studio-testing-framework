@@ -166,16 +166,19 @@ public class MobileCommonHelper {
     private static DevicePixelRatio caculateDevicePixelRatio(AppiumDriver<? extends WebElement> driver)
             throws MobileException {
         BufferedImage fullShot = MobileScreenCaptor.takeScreenshot(driver);
+        int actualHeight = fullShot.getHeight();
         int actualWidth = fullShot.getWidth();
         Dimension deviceSize = driver.manage().window().getSize();
+        int deviceHeight = deviceSize.getHeight();
         int deviceWidth = deviceSize.getWidth();
         double ratioX = (actualWidth * 1.0) / deviceWidth;
-        return new DevicePixelRatio(ratioX, ratioX);
+        double ratioY = (actualHeight * 1.0) / deviceHeight;
+        return new DevicePixelRatio(ratioX, ratioY);
     }
     
     private static int getStatusBarHeight(AppiumDriver<? extends WebElement> driver, DevicePixelRatio pixelRatio) {
         if (driver instanceof AndroidDriver) {
-            return AndroidHelper.getStatusBarHeightAndroid((AndroidDriver<? extends WebElement>)driver);
+            return AndroidHelper.getStatusBarHeightAndroid((AndroidDriver<? extends WebElement>)driver, pixelRatio);
         }
         if (driver instanceof IOSDriver) {
             return IOSHelper.getStatusBarHeight(driver, pixelRatio);
@@ -193,10 +196,6 @@ public class MobileCommonHelper {
             devicePixelRatio = null;
         }
         
-        if (driver instanceof IOSDriver) {
-            String bundleID = IOSHelper.getActiveAppInfo((IOSDriver<? extends WebElement>)driver);
-            session.getProperties().put(PROPERTY_NAME_IOS_BUNDLEID, bundleID);
-        }
         int statusbarHeight = getStatusBarHeight(driver, devicePixelRatio);
         session.getProperties().put(PROPERTY_NAME_DEVICE_PIXEL_RATIO, devicePixelRatio);
         session.getProperties().put(PROPERTY_NAME_OS_STATUS_BAR_HEIGHT, statusbarHeight);

@@ -1204,7 +1204,7 @@ public class GroovyParser {
                 }
 
                 // Import
-                List<ImportNode> imports = moduleNode.getImports();
+                List<ImportNode> imports = new ArrayList<ImportNode>(moduleNode.getImports());
                 if (imports.size() > 0) {
                     Collections.sort(imports, importNodeComparator);
                     for (ImportNode importNode : imports) {

@@ -119,8 +119,8 @@ public final class TestOpsLogHelper {
         if (!isHandledTestOpsProperties(attributes)) {
             StackTraceElement[] stackTraces = Thread.currentThread().getStackTrace();
             attributes.putAll(TestOpsLogHelper.getTestOpsAttributes(LogLevel.FAILED, stackTraces));
-            attributes.remove(TESTOPS_LOG_PROPERTY_SKIP);
         }
+        attributes.remove(TESTOPS_LOG_PROPERTY_SKIP);
     }
     
     private static boolean isHandledTestOpsProperties(Map<String, String> properties) {

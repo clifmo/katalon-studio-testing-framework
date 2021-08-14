@@ -47,7 +47,7 @@ public class JUnitTestSuite {
     @XmlAttribute(name = "disabled")
     protected String disabled;
 
-    @XmlAttribute(name = "skips")
+    @XmlAttribute(name = "skipped")
     protected String skipped;
 
     @XmlAttribute(name = "timestamp")

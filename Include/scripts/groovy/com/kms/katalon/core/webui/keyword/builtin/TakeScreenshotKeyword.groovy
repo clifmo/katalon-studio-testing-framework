@@ -5,6 +5,7 @@ import groovy.transform.CompileStatic
 import java.io.File
 import java.text.MessageFormat
 import java.util.concurrent.TimeUnit
+import java.awt.Color
 
 import org.apache.commons.io.FileUtils
 import org.openqa.selenium.Alert
@@ -41,6 +42,7 @@ import com.kms.katalon.core.testobject.TestObjectProperty
 import com.kms.katalon.core.util.internal.ExceptionsUtil
 import com.kms.katalon.core.util.internal.PathUtil
 import com.kms.katalon.core.util.internal.TestOpsUtil
+import com.kms.katalon.core.webui.common.ImageTextProperties
 import com.kms.katalon.core.webui.common.ScreenUtil
 import com.kms.katalon.core.webui.common.WebUiCommonHelper
 import com.kms.katalon.core.webui.constants.StringConstants
@@ -48,6 +50,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.driver.WebUIDriverType
 import com.kms.katalon.core.webui.exception.BrowserNotOpenedException
 import com.kms.katalon.core.webui.exception.WebElementNotFoundException
+import com.kms.katalon.core.webui.helper.screenshot.ScreenshotTextHelper
 import com.kms.katalon.core.webui.keyword.internal.WebUIAbstractKeyword
 import com.kms.katalon.core.webui.keyword.internal.WebUIKeywordMain
 import com.kms.katalon.core.webui.util.FileUtil
@@ -69,29 +72,44 @@ public class TakeScreenshotKeyword extends WebUIAbstractKeyword {
         }
 
         String fileName = (String)params[0]
-        boolean isTestOpsVisionCheckPoint = (boolean)params[1]
+        boolean isTestOpsVisionCheckPoint = (boolean)params[3]
         if (!isTestOpsVisionCheckPoint && fileName == null) {
             fileName = defaultFileName()
         }
-        FailureHandling flowControl = params[2] == null ?
-                RunConfiguration.getDefaultFailureHandling() : (FailureHandling)params[2]
-        return takeScreenshot(fileName, isTestOpsVisionCheckPoint, flowControl)
+        List<TestObject> hideElement = (List<TestObject>) params[1];
+        Color hideColor = (Color)params[2];
+        Map<String, Object> screenshotOptions = (Map<String, Object>) params[4];
+        FailureHandling flowControl = params[5] == null ?
+                RunConfiguration.getDefaultFailureHandling() : (FailureHandling)params[5]
+        return takeScreenshot(fileName, hideElement, hideColor, isTestOpsVisionCheckPoint, screenshotOptions, flowControl)
     }
 
     private boolean isValidData(Object... params) {
-        if (params.length != 3) {
+        if (params.length != 6) {
             return false
         }
 
         if (params[0] != null && !(params[0] instanceof String)) {
             return false;
         }
-
-        if (params[1] != null && !(params[1] instanceof Boolean)) {
+        
+        if (params[1] != null && !(params[1] instanceof List)) {
+            return false;
+        }
+        
+        if (params[2] != null && !(params[2] instanceof Color)) {
+            return false;
+        }
+        
+        if (params[3] != null && !(params[3] instanceof Boolean)) {
             return false;
         }
 
-        if (params[2] != null && !(params[2] instanceof FailureHandling)) {
+        if (params[4] != null && !(params[4] instanceof Map)) {
+            return false;
+        }
+
+        if (params[5] != null && !(params[5] instanceof FailureHandling)) {
             return false;
         }
 
@@ -103,9 +121,13 @@ public class TakeScreenshotKeyword extends WebUIAbstractKeyword {
     }
 
     @CompileStatic
-    public String takeScreenshot(String fileName, boolean isTestOpsVisionCheckPoint, FailureHandling flowControl) {
+    public String takeScreenshot(String fileName, List<TestObject> hideElements, Color hideColor,
+    boolean isTestOpsVisionCheckPoint, Map<String, Object> screenshotOptions, FailureHandling flowControl) {
         return WebUIKeywordMain.runKeyword({
-            String screenFileName = FileUtil.takesScreenshot(fileName, isTestOpsVisionCheckPoint)
+            String screenFileName = FileUtil.takesScreenshot(fileName, hideElements, hideColor, isTestOpsVisionCheckPoint);
+            if (screenshotOptions != null) {
+                ScreenshotTextHelper.addTextToScreenShot(screenFileName, screenshotOptions)
+            }
             if (screenFileName != null) {
                 String fileNameForLog = TestOpsUtil.getRelativePathForLog(screenFileName)
                 Map<String, String> attributes = new HashMap<>()

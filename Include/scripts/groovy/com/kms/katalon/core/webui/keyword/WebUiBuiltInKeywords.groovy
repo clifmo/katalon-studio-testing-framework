@@ -1,5 +1,7 @@
 package com.kms.katalon.core.webui.keyword;
 
+import java.awt.Color
+
 import org.openqa.selenium.Rectangle
 import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.WebElement
@@ -11,6 +13,7 @@ import com.kms.katalon.core.keyword.BuiltinKeywords
 import com.kms.katalon.core.keyword.internal.KeywordExecutor
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.TestObject
+import com.kms.katalon.core.webui.common.ImageTextProperties
 import com.kms.katalon.core.webui.constants.StringConstants
 import com.kms.katalon.core.webui.exception.WebElementNotFoundException
 import com.kms.katalon.core.webui.keyword.internal.WebUIAbstractKeyword
@@ -2895,6 +2898,22 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     public static boolean switchToFrame(TestObject to, int timeOut) throws IllegalArgumentException, WebElementNotFoundException, StepFailedException, WebDriverException {
         return (boolean) KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "switchToFrame", to, timeOut)
     }
+    
+    /**
+     * Take screenshot of the browser and add text to that screenshot.
+     * @param fileName
+     *      the absolute path of the saved screenshot image file
+     * @param screenshotOptions
+     *      options for the text needed adding to the screenshot.
+     *      Example: ["text" : "Katalon Studio", "x" : 10, "y" : 20, "font" : "Courier", "fontSize" : 24, "fontColor": "#808080"]
+     * @param flowControl
+     * @return the captured file path with the given text.
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeScreenshot(String fileName, Map screenshotOptions, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", fileName, null, null, false, screenshotOptions, flowControl)
+    }
 
     /**
      * Take screenshot of the browser
@@ -2905,7 +2924,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeScreenshot(String fileName) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", fileName, false, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", fileName, null, null, false, null, null)
     }
 
     /**
@@ -2918,7 +2937,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeScreenshot(String fileName, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", fileName, false, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", fileName, null, null, false, null, flowControl)
     }
 
     /**
@@ -2929,7 +2948,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeScreenshot(FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", null, false, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", null, null, null, false, null, flowControl)
     }
 
     /**
@@ -2939,9 +2958,111 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeScreenshot() {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", null, false, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", null, null, null, false, null, null)
+    }
+    
+    /**
+     * Take screenshot of the browser and add text to that screenshot.
+     * @param fileName
+     *      the absolute path of the saved screenshot image file
+     * @param screenshotOptions
+     *      options for the text needed adding to the screenshot.
+     *      Example: ["text" : "Katalon Studio", "x" : 10, "y" : 20, "font" : "Courier", "fontSize" : 24, "fontColor": "#808080"]
+     * @return the captured file path with the given text.
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeScreenshot(String fileName, Map<String, Object> screenshotOptions) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", fileName, null, null, false, screenshotOptions, null)
     }
 
+    /**
+     * Take screenshot of the browser and add text to that screenshot.
+     * @param screenshotOptions
+     *      options for the text needed adding to the screenshot.
+     *      Example: ["text" : "Katalon Studio", "x" : 10, "y" : 20, "font" : "Courier", "fontSize" : 24, "fontColor": "#808080"]
+     * @param flowControl
+     * @return the captured file path with the given text.
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeScreenshot(Map<String, Object> screenshotOptions, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", null, null, null, false, screenshotOptions, flowControl)
+    }
+
+    /**
+     * Take screenshot of the browser and add text to that screenshot.
+     * @param screenshotOptions
+     *      options for the text needed adding to the screenshot.
+     *      Example: ["text" : "Katalon Studio", "x" : 10, "y" : 20, "font" : "Courier", "fontSize" : 24, "fontColor": "#808080"]
+     * @return the captured file path with the given text.
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeScreenshot(Map<String, Object> screenshotOptions) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", null, null, null, false, screenshotOptions, null)
+    }
+    
+    /** Take screenshot of current view-port to send to TestOps Vision. The captured image will be saved in '.png' format.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the captured checkpoint.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeScreenshotAsCheckpoint(String checkpointName, List<TestObject> hideElements, Color hideColor, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", checkpointName, hideElements, hideColor, true, null, flowControl)
+    }
+    
+    /** Take screenshot of current view-port to send to TestOps Vision. The captured image will be saved in '.png' format.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer.  Can be null. Default is Color.GRAY.
+     * @return a String represents path to the captured checkpoint.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeScreenshotAsCheckpoint(String checkpointName, List<TestObject> hideElements, Color hideColor) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", checkpointName, hideElements, hideColor, true, null, null)
+    }
+    
+    /** Take screenshot of current view-port to send to TestOps Vision. The captured image will be saved in '.png' format.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the captured checkpoint.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeScreenshotAsCheckpoint(String checkpointName, List<TestObject> hideElements,  FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", checkpointName, hideElements, null, true, null, flowControl)
+    }
+
+    /**  Take screenshot of current view-port to send to TestOps Vision. The captured image will be saved in '.png' format.
+     * @param checkpointName  Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @return a String represents path to the captured checkpoint.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeScreenshotAsCheckpoint(String checkpointName, List<TestObject> hideElements) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", checkpointName, hideElements, null, true, null, null)
+    }
+    
     /**
      * Take screenshot of current view-port to send to TestOps Vision. The captured image will be saved in '.png' format.
      * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
@@ -2954,9 +3075,8 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeScreenshotAsCheckpoint(String checkpointName, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", checkpointName, true, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", checkpointName, null, null, true, null, flowControl)
     }
-    
     
     /**
      * Take screenshot of current view-port to send to TestOps Vision. Default FailureHandling is used.
@@ -2970,7 +3090,87 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeScreenshotAsCheckpoint(String checkpointName) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", checkpointName, true, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeScreenshot", checkpointName, null, null, true, null, null)
+    }
+    
+    /** Take screenshot of entire page. For chromium-based browser, take entire page screenshot api of developer tools will be used. Otherwise uses scroll-and-shot method instead.
+     * @param fileName  Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param ignoredElements List of TestObject that will be hidden using JavaScript. Can be null or empty.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the captured file.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeFullPageScreenshot(String fileName, List<TestObject> hideElements, Color hideColor, List<TestObject> ignoredElements, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", fileName, ignoredElements, hideElements, hideColor, false, flowControl)
+    }
+    
+    /** Take screenshot of entire page. For chromium-based browser, take entire page screenshot api of developer tools will be used. Otherwise uses scroll-and-shot method instead.
+     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param ignoredElements List of TestObject that will be hidden using JavaScript. Can be null or empty.
+     * @return a String represents path to the captured file.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeFullPageScreenshot(String fileName, List<TestObject> hideElements, Color hideColor, List<TestObject> ignoredElements) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", fileName, ignoredElements, hideElements, hideColor, false, null)
+    }
+    
+    /** Take screenshot of entire page. For chromium-based browser, take entire page screenshot api of developer tools will be used. Otherwise uses scroll-and-shot method instead.
+     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the captured file.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeFullPageScreenshot(String fileName, List<TestObject> hideElements, Color hideColor, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", fileName, null, hideElements, hideColor, false, flowControl)
+    }
+    
+    /** Take screenshot of entire page. For chromium-based browser, take entire page screenshot api of developer tools will be used. Otherwise uses scroll-and-shot method instead.
+     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @return a String represents path to the captured file.
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeFullPageScreenshot(String fileName, List<TestObject> hideElements, Color hideColor) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", fileName, null, hideElements, hideColor, false, null)
+    }
+    
+    /** Take screenshot of entire page. For chromium-based browser, take entire page screenshot api of developer tools will be used. Otherwise uses scroll-and-shot method instead.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the captured file.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeFullPageScreenshot(List<TestObject> hideElements, Color hideColor, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", null, null, hideElements, hideColor, false, flowControl)
+    }
+    
+    /** Take screenshot of entire page. For chromium-based browser, take entire page screenshot api of developer tools will be used. Otherwise uses scroll-and-shot method instead.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @return a String represents path to the captured file.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeFullPageScreenshot(List<TestObject> hideElements, Color hideColor) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", null, null, hideElements, hideColor, false, null)
     }
 
     /**
@@ -2992,7 +3192,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeFullPageScreenshot(String fileName, List<TestObject> ignoredElements, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", fileName, ignoredElements, false, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", fileName, ignoredElements, null, null, false, flowControl)
     }
 
     
@@ -3008,7 +3208,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeFullPageScreenshot(String fileName, List<TestObject> ignoredElements) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", fileName, ignoredElements, false, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", fileName, ignoredElements, null, null, false, null)
     }
 
     /**
@@ -3022,7 +3222,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeFullPageScreenshot(String fileName) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", fileName, null, false, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", fileName, null, null, null, false, null)
     }
     
     /**
@@ -3037,7 +3237,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeFullPageScreenshot(String fileName, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", fileName, null, false, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", fileName, null, null, null, false, flowControl)
     }
     
     /**
@@ -3051,7 +3251,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeFullPageScreenshot(List<TestObject> ignoredElements) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", null, ignoredElements, false, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", null, ignoredElements, null, null, false, null)
     }
 
     /**
@@ -3066,7 +3266,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeFullPageScreenshot(List<TestObject> ignoredElements, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", null, ignoredElements, false, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", null, ignoredElements, null, null, false, flowControl)
     }
     
     
@@ -3080,7 +3280,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeFullPageScreenshot() {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", null, null, false, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", null, null, null, null, false, null)
     }
     
     /**
@@ -3094,7 +3294,71 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeFullPageScreenshot(FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", null, null, false, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", null, null, null, null, false, flowControl)
+    }
+    
+    /** Take screenshot of entire page to send to TestOps Vision.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param ignoredElements List of TestObject that will be hidden using JavaScript. The list can be null or empty.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the saved checkpoint image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeFullPageScreenshotAsCheckpoint(String checkpointName, List<TestObject> hideElements, Color hideColor, List<TestObject> ignoredElements, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", checkpointName, ignoredElements, hideElements, hideColor, true, flowControl)
+    }
+    
+    /** Take screenshot of entire page to send to TestOps Vision.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param ignoredElements List of TestObject that will be hidden using JavaScript. The list can be null or empty.
+     * @return a String represents path to the saved checkpoint image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeFullPageScreenshotAsCheckpoint(String checkpointName, List<TestObject> hideElements, Color hideColor, List<TestObject> ignoredElements) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", checkpointName, ignoredElements, hideElements, hideColor, true, null)
+    }
+    
+    /** Take screenshot of entire page to send to TestOps Vision.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the saved checkpoint image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeFullPageScreenshotAsCheckpoint(String checkpointName, List<TestObject> hideElements, Color hideColor, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", checkpointName, null, hideElements, hideColor, true, flowControl)
+    }
+    
+    /** Take screenshot of entire page to send to TestOps Vision.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @return a String represents path to the saved checkpoint image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeFullPageScreenshotAsCheckpoint(String checkpointName, List<TestObject> hideElements, Color hideColor) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", checkpointName, null, hideElements, hideColor, true, null)
     }
     
     /**
@@ -3114,7 +3378,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeFullPageScreenshotAsCheckpoint(String checkpointName, List<TestObject> ignoredElements, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", checkpointName, ignoredElements, true, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", checkpointName, ignoredElements, null, null, true, flowControl)
     }
     
     /**
@@ -3131,7 +3395,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeFullPageScreenshotAsCheckpoint(String checkpointName, List<TestObject> ignoredElements) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", checkpointName, ignoredElements, true, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", checkpointName, ignoredElements, null, null, true, null)
     }
 
     /**
@@ -3148,7 +3412,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeFullPageScreenshotAsCheckpoint(String checkpointName, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", checkpointName, null, true, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", checkpointName, null, null, null, true, flowControl)
     }
 
     /**
@@ -3164,15 +3428,129 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeFullPageScreenshotAsCheckpoint(String checkPointName) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", checkPointName, null, true, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeFullPageScreenshot", checkPointName, null, null, null, true, null)
+    }
+    
+    /** Take screenshot of the specific web element.
+     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
+     * This parameter cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the saved image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeElementScreenshot(String fileName, TestObject to, List<TestObject> hideElements, Color hideColor, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", fileName, to, hideElements, hideColor, false, flowControl)
+    }
+    
+    /** Take screenshot of the specific web element.
+     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
+     * This parameter cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @return a String represents path to the saved image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeElementScreenshot(String fileName, TestObject to, List<TestObject> hideElements, Color hideColor) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", fileName, to, hideElements, hideColor, false, null)
+    }
+    
+    /** Take screenshot of the specific web element.
+     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
+     * This parameter cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the saved image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeElementScreenshot(String fileName, TestObject to, List<TestObject> hideElements, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", fileName, to, hideElements, null, false, flowControl)
+    }
+    
+    /** Take screenshot of the specific web element.
+     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
+     * This parameter cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @return a String represents path to the saved image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeElementScreenshot(String fileName, TestObject to, List<TestObject> hideElements) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", fileName, to, hideElements, null, false, null)
+    }
+    
+    /** Take screenshot of the specific web element.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
+     * This parameter cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the saved image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeElementScreenshot(TestObject to, List<TestObject> hideElements, Color hideColor, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", null, to, hideElements, hideColor, false, flowControl)
+    }
+    
+    /** Take screenshot of the specific web element.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
+     * This parameter cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @return a String represents path to the saved image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeElementScreenshot(TestObject to, List<TestObject> hideElements, Color hideColor) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", null, to, hideElements, hideColor, false, null)
+    }
+    
+    /** Take screenshot of the specific web element.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
+     * This parameter cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the saved image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeElementScreenshot(TestObject to, List<TestObject> hideElements, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", null, to, hideElements, null, false, flowControl)
+    }
+    
+    /** Take screenshot of the specific web element.
+     * @param to Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @return a String represents path to the saved image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeElementScreenshot(TestObject to, List<TestObject> hideElements) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", null, to, hideElements, null, false, null)
     }
     
     /** 
      * Take screenshot of the specific web element.
-     * The TestObject must have CSS selector so that Web Driver can find the element on the page.
      * If the element doesn't exist then this method will fail.
      * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function. If TestObject is manually created, CSS selector is required.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
      * This parameter cannot be null.
      * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
      * @return a String represents path to the saved image.
@@ -3182,13 +3560,13 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeElementScreenshot(String fileName, TestObject to, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", fileName, to, false, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", fileName, to, null, null, false, flowControl)
     }
 
     /**
      * Take screenshot of the specific element. Default FailureHandling is used.
      * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
-     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function. If TestObject is manually created, CSS selector is required.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
      * This parameter cannot be null.
      * @return a String represents path to the saved image
      * @since 7.7.0
@@ -3198,12 +3576,12 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeElementScreenshot(String fileName, TestObject to) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", fileName, to, false, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", fileName, to, null, null, false, null)
     }
 
     /**
      * Take screenshot of the specific element with default FailureHandling and default file name.
-     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function. If TestObject is manually created, CSS selector is required.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
      * This parameter cannot be null.
      * @return a String represents path to the saved image.
      * @since 7.7.0
@@ -3213,12 +3591,12 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeElementScreenshot(TestObject to) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", null, to, false, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", null, to, null, null, false, null)
     }
 
     /**
      * Take screenshot of the specific element with default file name.
-     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function. If TestObject is manually created, CSS selector is required.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
      * This parameter cannot be null.
      * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
      * @return a String represents path to the saved image.
@@ -3229,17 +3607,84 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeElementScreenshot(TestObject to, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", null, to, false, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", null, to, null, null, false, flowControl)
+    }
+    
+    /** Take screenshot of the specific web element to send to TestOps Vision.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
+     * This parameter cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the saved checkpoint image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeElementScreenshotAsCheckpoint(String checkpointName, TestObject to, List<TestObject> hideElements, Color hideColor, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", checkpointName, to, hideElements, hideColor, true, flowControl)
+    }
+    
+    /** Take screenshot of the specific web element to send to TestOps Vision.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
+     * This parameter cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @return a String represents path to the saved checkpoint image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeElementScreenshotAsCheckpoint(String checkpointName, TestObject to, List<TestObject> hideElements, Color hideColor) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", checkpointName, to, hideElements, hideColor, true, null)
+    }
+    
+    /** Take screenshot of the specific web element to send to TestOps Vision.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
+     * This parameter cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the saved checkpoint image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeElementScreenshotAsCheckpoint(String checkpointName, TestObject to, List<TestObject> hideElements, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", checkpointName, to, hideElements, null, true, flowControl)
+    }
+    
+    /** Take screenshot of the specific web element to send to TestOps Vision.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
+     * This parameter cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @return a String represents path to the saved checkpoint image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeElementScreenshotAsCheckpoint(String checkpointName, TestObject to, List<TestObject> hideElements) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", checkpointName, to, hideElements, null, true, null)
     }
     
     /**
      * Take screenshot of the specific web element to send to TestOps Vision.
-     * The TestObject must have CSS selector so that Web Driver can find the element on the page.
      * If the element doesn't exist then this method will fail.
      * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
      * Checkpoint will be saved in 'keyes' folder in report folder.
      * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function. If TestObject is manually created, CSS selector is required.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
      * This parameter cannot be null.
      * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
      * @return a String represents path to the saved checkpoint image.
@@ -3250,7 +3695,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeElementScreenshotAsCheckpoint(String checkpointName, TestObject to, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", checkpointName, to, true, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", checkpointName, to, null, null, true, flowControl)
     }
 
     /**
@@ -3258,7 +3703,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
      * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
      * Checkpoint will be saved in 'keyes' folder in report folder.
      * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
-     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function. If TestObject is manually created, CSS selector is required.
+     * @param to TestObject got from WebSpy and <i>findTestObject(String to)</i> function.
      * This parameter cannot be null.
      * @return a String represents path to the saved checkpoint image.
      * @since 7.7.0
@@ -3268,7 +3713,123 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeElementScreenshotAsCheckpoint(String checkpointName, TestObject to) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", checkpointName, to, true, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeElementScreenshot", checkpointName, to, null, null, true, null)
+    }
+    
+    /** Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
+     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
+     * This cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the captured image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeAreaScreenshot(String fileName, Rectangle rect, List<TestObject> hideElements, Color hideColor, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", fileName, rect, hideElements, hideColor, false, flowControl)
+    }
+    
+    /** Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
+     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
+     * This cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @return a String represents path to the captured image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeAreaScreenshot(String fileName, Rectangle rect, List<TestObject> hideElements, Color hideColor) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", fileName, rect, hideElements, hideColor, false, null)
+    }
+    
+    /** Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
+     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
+     * This cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the captured image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeAreaScreenshot(String fileName, Rectangle rect, List<TestObject> hideElements, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", fileName, rect, hideElements, null, false, flowControl)
+    }
+    
+    /** Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
+     * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
+     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
+     * This cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @return a String represents path to the captured image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeAreaScreenshot(String fileName, Rectangle rect, List<TestObject> hideElements) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", fileName, rect, hideElements, null, false, null)
+    }
+    
+    /** Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
+     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
+     * This cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the captured image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeAreaScreenshot(Rectangle rect, List<TestObject> hideElements, Color hideColor, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", null, rect, hideElements, hideColor, false, flowControl)
+    }
+    
+    /** Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
+     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
+     * This cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @return a String represents path to the captured image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeAreaScreenshot(Rectangle rect, List<TestObject> hideElements, Color hideColor) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", null, rect, hideElements, hideColor, false, null)
+    }
+    
+    /** Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
+     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
+     * This cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the captured image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeAreaScreenshot(Rectangle rect, List<TestObject> hideElements, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", null, rect, hideElements, null, false, flowControl)
+    }
+    
+    /** Take screenshot of the specific Rectangle in current view-port. If the rectangle is not located within the view-port, this method will fail.
+     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
+     * This cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @return a String represents path to the captured image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeAreaScreenshot(Rectangle rect, List<TestObject> hideElements) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", null, rect, hideElements, null, false, null)
     }
 
     /**
@@ -3276,7 +3837,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
      * You have to use Script mode to create the Rectangle object.</p>
      * <code>
      * import org.openqa.selenium.Rectangle as Rectangle
-     * WebUI.takeAreaScreenshotAsCheckpoint('screenshot_area_demo.png', new Rectangle(x, y, width, height))
+     * WebUI.takeAreaScreenshotAsCheckpoint('screenshot_area_demo.png', new Rectangle(x, y, height, width))
      * </code>
      * @param fileName Absolute path to the captured file. If fileName if null, default file will be used.
      * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
@@ -3290,7 +3851,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeAreaScreenshot(String fileName, Rectangle rect, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", fileName, rect, false, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", fileName, rect, null, null, false, flowControl)
     }
     
     /**
@@ -3304,7 +3865,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeAreaScreenshot(String fileName, Rectangle rect) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", fileName, rect, false, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", fileName, rect, null, null, false, null)
     }
 
     /**
@@ -3317,7 +3878,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeAreaScreenshot(Rectangle rect) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", null, rect, false, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", null, rect, null, null, false, null)
     }
     
     /**
@@ -3331,15 +3892,83 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeAreaScreenshot(Rectangle rect, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", null, rect, false, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", null, rect, null, null, false, flowControl)
     }
 
+    /** Take screenshot of the specific area within current view-port  to send to TestOps Vision.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
+     * This cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the saved checkpoint image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeAreaScreenshotAsCheckpoint(String checkpointName, Rectangle rect, List<TestObject> hideElements, Color hideColor, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", checkpointName, rect, hideElements, hideColor, true, flowControl)
+    }
+    
+    /** Take screenshot of the specific area within current view-port  to send to TestOps Vision.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
+     * This cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param hideColor Color used to draw the overlap layer. Can be null. Default is Color.GRAY.
+     * @return a String represents path to the saved checkpoint image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeAreaScreenshotAsCheckpoint(String checkpointName, Rectangle rect, List<TestObject> hideElements, Color hideColor) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", checkpointName, rect, hideElements, hideColor, true, null)
+    }
+    
+    /** Take screenshot of the specific area within current view-port  to send to TestOps Vision.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
+     * This cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @param flowControl the FailureHandling defines how the test case is run in case this step failed. If it is null, default value will be used.
+     * @return a String represents path to the saved checkpoint image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeAreaScreenshotAsCheckpoint(String checkpointName, Rectangle rect, List<TestObject> hideElements, FailureHandling flowControl) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", checkpointName, rect, hideElements, null, true, flowControl)
+    }
+    
+    /** Take screenshot of the specific area within current view-port  to send to TestOps Vision.
+     * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
+     * Checkpoint will be saved in 'keyes' folder in report folder.
+     * Checkpoint's name will be used by TestOps Vision to detect what baseline image this shot is compared with.
+     * @param rect The declared rectangle area that will be captured. The declare rectangle must be inside the current view-port, otherwise this step will fail.
+     * This cannot be null.
+     * @param hideElements List of TestObject that will be hidden by drawing an overlap color layer after taking screenshot. Can be null or empty.
+     * @return a String represents path to the saved checkpoint image.
+     * @since 7.9.0
+     */
+    @CompileStatic
+    @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
+    public static String takeAreaScreenshotAsCheckpoint(String checkpointName, Rectangle rect, List<TestObject> hideElements) {
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", checkpointName, rect, hideElements, null, true, null)
+    }
+    
     /**
      * <p>Take screenshot of the specific area within current view-port  to send to TestOps Vision.
      * You have to use Script mode to create the Rectangle object.</p>
      * <code>
      * import org.openqa.selenium.Rectangle as Rectangle
-     * WebUI.takeAreaScreenshotAsCheckpoint('screenshot_area_demo.png', new Rectangle(x, y, width, height))
+     * WebUI.takeAreaScreenshotAsCheckpoint('screenshot_area_demo.png', new Rectangle(x, y, height, width))
      * </code>
      * @param checkpointName Name of the checkpoint which will be appended with TestOps Vision prefix to complete the saved file name.
      * Checkpoint will be saved in 'keyes' folder in report folder.
@@ -3353,7 +3982,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeAreaScreenshotAsCheckpoint(String checkpointName, Rectangle rect, FailureHandling flowControl) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", checkpointName, rect, true, flowControl)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", checkpointName, rect, null, null, true, flowControl)
     }
 
     /**
@@ -3369,7 +3998,7 @@ public class WebUiBuiltInKeywords extends BuiltinKeywords {
     @CompileStatic
     @Keyword(keywordObject = StringConstants.KW_CATEGORIZE_UTILITIES)
     public static String takeAreaScreenshotAsCheckpoint(String checkpointName, Rectangle rect) {
-        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", checkpointName, rect, true, null)
+        KeywordExecutor.executeKeywordForPlatform(KeywordExecutor.PLATFORM_WEB, "takeAreaScreenshot", checkpointName, rect, null, null, true, null)
     }
 
     /**
